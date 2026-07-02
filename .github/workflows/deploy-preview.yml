@@ -2,10 +2,11 @@ name: Deploy Preview (GitHub Pages)
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
     paths:
-      - 'test-app/**'
-      - 'src/**'
+      - "test-app/**"
+      - "src/**"
   workflow_dispatch:
 
 permissions:
@@ -19,26 +20,26 @@ concurrency:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
-      # Build the library first
       - name: Install library dependencies
         run: npm ci
 
       - name: Build library
         run: npm run build
 
-      # Build test-app
       - name: Install test-app dependencies
         working-directory: test-app
         run: npm ci
@@ -50,11 +51,12 @@ jobs:
         run: npm run build
 
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
           path: test-app/dist
 
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
