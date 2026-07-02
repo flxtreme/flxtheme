@@ -43,44 +43,27 @@ That's it — no token needed. The workflow uses the built-in `GITHUB_TOKEN` wit
 
 ---
 
-## 3. Changelog (for `changelog.yml`)
+## 3. Automated Versioning & Releases (`release-please.yml`)
 
-No extra tokens needed. The workflow uses the built-in `GITHUB_TOKEN` with `contents: write` permission to commit the changelog.
+We use **Release Please** to fully automate versioning, changelog generation, and GitHub releases.
+No extra tokens are needed; it uses `GITHUB_TOKEN` with `contents: write` and `pull-requests: write`.
 
-### Conventional Commits:
+### How it works:
+1. When you push a commit with `feat:` or `fix:`, Release Please automatically opens a **Release Pull Request**.
+2. As you add more commits, it updates the PR.
+3. When you are ready to publish a new version, you **merge the Release PR**.
+4. A Git Tag and GitHub Release are automatically created.
+5. The `publish.yml` workflow gets triggered by the GitHub Release and automatically publishes to npm!
 
-For the changelog to generate properly, use [Conventional Commits](https://www.conventionalcommits.org/) format:
+### Conventional Commits
+To trigger automated version bumps, you MUST use [Conventional Commits](https://www.conventionalcommits.org/):
 
-```
-feat: add new Button component
-fix: resolve theme toggle issue
-docs: update README
-feat(icons): add new icon set
-fix!: breaking change to API
-```
-
-| Prefix     | Category         |
-|------------|------------------|
-| `feat:`    | 🚀 Features     |
-| `fix:`     | 🐛 Bug Fixes    |
-| `docs:`    | 📚 Documentation |
-| `perf:`    | ⚡ Performance   |
-| `refactor:`| 🔨 Refactoring  |
-| `style:`   | 🎨 Styling      |
-| `test:`    | 🧪 Testing      |
-| `chore:`   | ⚙️ Miscellaneous |
-
----
-
-## 4. Publishing a Release (Workflow)
-
-1. Update the `version` in `package.json`
-2. Commit: `git commit -m "chore(release): v1.1.0"`
-3. Tag: `git tag v1.1.0`
-4. Push: `git push && git push --tags`
-5. Go to GitHub → **Releases** → **Draft a new release**
-6. Select your tag, add release notes, and click **Publish release**
-7. The `publish.yml` workflow will automatically publish to npm
+| Prefix               | Effect                   | Example                                |
+|----------------------|--------------------------|----------------------------------------|
+| `fix:`               | Bumps **PATCH** version | `fix: resolve theme toggle issue`      |
+| `feat:`              | Bumps **MINOR** version | `feat: add new Button component`       |
+| `feat!:` or `fix!:`  | Bumps **MAJOR** version | `feat!: breaking change to API`        |
+| `docs:`, `chore:`, etc. | No version bump      | `docs: update README`                  |
 
 ---
 
@@ -90,4 +73,4 @@ fix!: breaking change to API
 |-------------|-------------------------------|--------------------|
 | NPM Token  | npmjs.com → Access Tokens     | `NPM_TOKEN`       |
 | GitHub Pages | Repo Settings → Pages → Source: GitHub Actions | *(no secret needed)* |
-| Changelog    | *(no secret needed)*          | *(no secret needed)* |
+| Release Please | *(no secret needed)*          | *(no secret needed)* |
