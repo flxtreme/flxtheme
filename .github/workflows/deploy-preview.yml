@@ -27,39 +27,35 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      - name: Install library dependencies
+      - run: npm ci
+
+      - run: npm run build
+
+      - working-directory: test-app
         run: npm ci
 
-      - name: Build library
-        run: npm run build
-
-      - name: Install test-app dependencies
-        working-directory: test-app
-        run: npm ci
-
-      - name: Build test-app
-        working-directory: test-app
+      - working-directory: test-app
         env:
           BASE_URL: /${{ github.event.repository.name }}/
         run: npm run build
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./test-app/dist
+          name: preview-pages
+          path: test-app/dist
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: preview-pages
