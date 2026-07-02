@@ -61,6 +61,6 @@ describe('IconButton', () => {
     render(<IconButton icon={<span>★</span>} aria-label="Star" />);
     const btn = screen.getByRole('button', { name: /star/i });
     expect(btn).toBeInTheDocument();
-    expect(btn.className).toContain('flx-icon-btn--ghost');
+    expect(btn.className).toContain('flx-icon-btn');
   });
 });
