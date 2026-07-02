@@ -38,6 +38,10 @@
     "lint": "eslint src/",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flxtreme/flxtheme.git"
+  },
   "keywords": [
     "react",
     "components",
