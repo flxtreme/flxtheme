@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0 (2026-07-02)
+
+
+### Features
+
+* add test app ([f51f567](https://github.com/flxtreme/flxtheme/commit/f51f5671d28a5f8f00ca5d3e69f719a78149a270))
+* **icons:** add exports for all react-icons packs ([9b97894](https://github.com/flxtreme/flxtheme/commit/9b9789409d4f10d86a94a7184dd94518dcf9add6))
+
+
+### Bug Fixes
+
+* **ci:** remove enablement from configure-pages ([c1eea2e](https://github.com/flxtreme/flxtheme/commit/c1eea2ed9cd41932fbadf91f7b24c4f37e6ca5c0))
+* **ci:** resolve npm publish and github pages deployment errors ([1247ef9](https://github.com/flxtreme/flxtheme/commit/1247ef99c935d36397fad9f01f5fb9bb26c5237c))
+
 ## [Unreleased]
 
 ### ⚙️ Miscellaneous
@@ -26,4 +40,3 @@ All notable changes to this project will be documented in this file.
 ### 🧪 Testing
 
 - Fix IconButton test and add tests for remaining components
-
