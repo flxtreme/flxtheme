@@ -1,88 +1,23 @@
 # flxtheme
 
-A React component library and theming system built for modern dashboards and web applications. flxtheme gives you a cohesive set of UI primitives wired to a single design token layer — swap your brand colors, radius, and typography in one place and every component updates automatically.
+A React component library and theming system built for modern dashboards and web applications. **flxtheme** provides a cohesive set of UI primitives powered by a centralized design token system—change your brand colors, typography, or border radius in one place and every component updates automatically.
 
-## What it's for
+## Links
 
-flxtheme is designed for teams who want to ship polished interfaces quickly without writing CSS from scratch. It provides the building blocks — layout, navigation, forms, data display, and overlays — with sensible defaults that stay out of your way and a theme system that scales as your product grows.
+* 🌐 **Preview:** https://flxtreme.github.io/flxtheme/
+* 📦 **npm:** https://www.npmjs.com/package/flxtheme
+* 💻 **GitHub:** https://github.com/flxtreme/flxtheme
 
-It works equally well for internal tools, admin dashboards, SaaS products, and customer-facing apps.
+## Features
 
-## How theming works
-
-Wrap your app in `<FlxTheme>` and every component pulls its colors, radius, and font family from CSS variables on the root element. You can pass a custom theme config or use the built-in defaults. Light and dark modes are handled automatically — toggle between them at runtime with no flash or hydration issues.
-
-```tsx
-import { FlxTheme } from 'flxtheme';
-
-export default function App() {
-  return (
-    <FlxTheme defaultMode="light" theme={yourTheme}>
-      <YourApp />
-    </FlxTheme>
-  );
-}
-```
-
-To customize, define your own `FlxThemeConfig` with `light` and `dark` color sets plus optional `radius` and `fontFamily` overrides.
-
-```tsx
-import { FlxTheme } from 'flxtheme';
-import type { FlxThemeConfig } from 'flxtheme';
-
-const theme: FlxThemeConfig = {
-  light: {
-    primary: '#0ea5e9',
-    primaryHover: '#0284c7',
-    // ... other tokens
-  },
-  dark: {
-    primary: '#38bdf8',
-    primaryHover: '#0ea5e9',
-    // ... other tokens
-  },
-  radius: '0.375rem',
-  fontFamily: "'Geist', system-ui, sans-serif",
-};
-
-<FlxTheme theme={theme}>...</FlxTheme>
-```
-
-## Design tokens
-
-All tokens are exposed as CSS variables prefixed with `--flx-`. You can use them in your own styles to stay consistent with the theme:
-
-| Token | Purpose |
-|---|---|
-| `--flx-primary` | Brand primary color |
-| `--flx-secondary` | Secondary accent |
-| `--flx-background` | Page background |
-| `--flx-foreground` | Default text color |
-| `--flx-surface` | Card and panel backgrounds |
-| `--flx-border` | Borders and dividers |
-| `--flx-muted` | Subtle backgrounds |
-| `--flx-muted-foreground` | Dimmed text |
-| `--flx-destructive` | Error and danger states |
-| `--flx-success` | Positive feedback |
-| `--flx-warning` | Caution states |
-| `--flx-info` | Informational states |
-| `--flx-radius` | Global border radius |
-| `--flx-font-family` | Global font stack |
-
-## Modal system
-
-flxtheme includes a context-based modal manager. Wrap your app in `<ModalProvider>` once and open or close any modal from anywhere in the tree using the `useModal()` hook — no prop drilling, no portal wiring.
-
-```tsx
-import { ModalProvider, Modal, useModal } from 'flxtheme';
-
-// In a deeply nested component:
-const { openModal } = useModal();
-<button onClick={() => openModal('confirm')}>Delete</button>
-
-// Anywhere in the tree:
-<Modal id="confirm" title="Are you sure?">...</Modal>
-```
+* 🎨 Centralized theming with light and dark mode support
+* 🧩 Reusable React UI components
+* 📐 Design tokens exposed as CSS variables
+* 📦 Built with TypeScript
+* ⚡ Minimal setup with sensible defaults
+* 🌙 Runtime theme switching without hydration issues
+* 🪟 Context-based modal management
+* 📱 Suitable for dashboards, SaaS applications, internal tools, and customer-facing products
 
 ## Installation
 
@@ -90,7 +25,139 @@ const { openModal } = useModal();
 npm install flxtheme
 ```
 
-Requires React 18+.
+**Requirements**
+
+* React 18 or later
+
+## Quick Start
+
+Wrap your application with `FlxTheme` to make the theme available to every component.
+
+```tsx
+import { FlxTheme } from "flxtheme";
+
+export default function App() {
+  return (
+    <FlxTheme defaultMode="light">
+      <YourApp />
+    </FlxTheme>
+  );
+}
+```
+
+## Custom Themes
+
+Create your own `FlxThemeConfig` to customize colors, typography, and border radius.
+
+```tsx
+import { FlxTheme } from "flxtheme";
+import type { FlxThemeConfig } from "flxtheme";
+
+const theme: FlxThemeConfig = {
+  light: {
+    primary: "#0ea5e9",
+    primaryHover: "#0284c7",
+    // ...other tokens
+  },
+  dark: {
+    primary: "#38bdf8",
+    primaryHover: "#0ea5e9",
+    // ...other tokens
+  },
+  radius: "0.375rem",
+  fontFamily: "'Geist', system-ui, sans-serif",
+};
+
+export default function App() {
+  return (
+    <FlxTheme theme={theme}>
+      <YourApp />
+    </FlxTheme>
+  );
+}
+```
+
+## Design Tokens
+
+Every theme value is exposed as a CSS variable prefixed with `--flx-`, allowing your own styles to stay consistent with the active theme.
+
+| Token                    | Description                   |
+| ------------------------ | ----------------------------- |
+| `--flx-primary`          | Primary brand color           |
+| `--flx-primary-hover`    | Primary hover color           |
+| `--flx-secondary`        | Secondary accent color        |
+| `--flx-background`       | Application background        |
+| `--flx-foreground`       | Primary text color            |
+| `--flx-surface`          | Cards and surface backgrounds |
+| `--flx-border`           | Borders and dividers          |
+| `--flx-muted`            | Muted backgrounds             |
+| `--flx-muted-foreground` | Secondary text color          |
+| `--flx-success`          | Success color                 |
+| `--flx-warning`          | Warning color                 |
+| `--flx-info`             | Information color             |
+| `--flx-destructive`      | Error and destructive actions |
+| `--flx-radius`           | Global border radius          |
+| `--flx-font-family`      | Global font family            |
+
+Example:
+
+```css
+.custom-card {
+  background: var(--flx-surface);
+  color: var(--flx-foreground);
+  border: 1px solid var(--flx-border);
+  border-radius: var(--flx-radius);
+}
+```
+
+## Modal System
+
+flxtheme includes a built-in context-based modal manager. Wrap your application once with `ModalProvider`, then open or close modals from anywhere using the `useModal()` hook.
+
+```tsx
+import {
+  ModalProvider,
+  Modal,
+  useModal,
+} from "flxtheme";
+
+function DeleteButton() {
+  const { openModal } = useModal();
+
+  return (
+    <button onClick={() => openModal("confirm-delete")}>
+      Delete
+    </button>
+  );
+}
+
+export default function App() {
+  return (
+    <ModalProvider>
+      <DeleteButton />
+
+      <Modal
+        id="confirm-delete"
+        title="Delete Item"
+      >
+        Are you sure?
+      </Modal>
+    </ModalProvider>
+  );
+}
+```
+
+## Use Cases
+
+flxtheme is well suited for:
+
+* Admin dashboards
+* SaaS platforms
+* Internal business tools
+* CRM and ERP systems
+* Analytics dashboards
+* Customer-facing web applications
+* Rapid UI prototyping
 
 ## License
 
