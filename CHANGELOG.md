@@ -10,8 +10,13 @@ All notable changes to this project will be documented in this file.
 - Update workflows to use master branch
 - Update changelog
 - Refactor deploy-preview workflow and bump Node to 22
+- Update changelog
 
 ### 🚀 Features
 
 - Add test app
+
+### 🧪 Testing
+
+- Fix IconButton test and add tests for remaining components
 
