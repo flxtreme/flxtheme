@@ -11,6 +11,11 @@ All notable changes to this project will be documented in this file.
 - Update changelog
 - Refactor deploy-preview workflow and bump Node to 22
 - Update changelog
+- Update changelog
+
+### 🐛 Bug Fixes
+
+- *(ci)* Resolve npm publish and github pages deployment errors
 
 ### 🚀 Features
 
