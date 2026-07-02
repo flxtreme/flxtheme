@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { cn } from '../utils/cn';
 
 export interface DropdownProps {
   trigger: React.ReactNode;
@@ -44,13 +45,11 @@ export interface DropdownItemProps extends React.HTMLAttributes<HTMLDivElement> 
 
 export const DropdownItem = React.forwardRef<HTMLDivElement, DropdownItemProps>(
   ({ icon, disabled = false, className = '', children, onClick, ...props }, ref) => {
-    const classes = [
+    const classes = cn(
       'flx-dropdown__item flex items-center gap-2 py-2 px-3 text-[0.875rem] text-foreground rounded-[calc(var(--flx-radius)-0.125rem)] cursor-pointer transition-colors duration-150 hover:bg-surface-hover',
       disabled ? 'flx-dropdown__item--disabled opacity-45 cursor-not-allowed pointer-events-none' : '',
       className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+    );
 
     return (
       <div

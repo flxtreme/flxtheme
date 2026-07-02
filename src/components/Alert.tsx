@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiInfo, FiCheckCircle, FiAlertTriangle, FiXCircle } from '../icons/fi';
+import { cn } from '../utils/cn';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: 'info' | 'success' | 'warning' | 'error';
@@ -20,11 +21,11 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
             <div
                 ref={ref}
                 role="alert"
-                className={[
+                className={cn(
                     'flx-alert flex gap-3 rounded-flx border border-solid px-4 py-3 text-sm',
                     wrap,
-                    className,
-                ].filter(Boolean).join(' ')}
+                    className
+                )}
                 {...props}
             >
                 {icon}

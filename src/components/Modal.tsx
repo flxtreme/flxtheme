@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useCallback, useState, useMemo } from 'react';
+import { cn } from '../utils/cn';
 
 /* ─── Modal Context ─── */
 interface ModalContextValue {
@@ -77,13 +78,14 @@ export function Modal({
   return (
     <div className="flx-modal-overlay fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm flex items-center justify-center p-4 animate-flx-modal-fade-in" onClick={handleOverlayClick} role="presentation">
       <div
-        className={`flx-modal bg-surface rounded-[calc(var(--flx-radius)+0.25rem)] shadow-[0_16px_48px_rgba(0,0,0,0.12)] border border-solid border-border w-full max-h-[90vh] flex flex-col relative animate-flx-modal-slide-up ${
-          size === 'sm' ? 'flx-modal--sm max-w-sm' :
-          size === 'md' ? 'flx-modal--md max-w-lg' :
-          size === 'lg' ? 'flx-modal--lg max-w-2xl' :
-          size === 'xl' ? 'flx-modal--xl max-w-4xl' :
-          'flx-modal--full max-w-[calc(100vw-2rem)] h-[calc(100vh-2rem)]'
-        }`}
+        className={cn(
+          'flx-modal bg-surface rounded-[calc(var(--flx-radius)+0.25rem)] shadow-[0_16px_48px_rgba(0,0,0,0.12)] border border-solid border-border w-full max-h-[90vh] flex flex-col relative animate-flx-modal-slide-up',
+          size === 'sm' && 'flx-modal--sm max-w-sm',
+          size === 'md' && 'flx-modal--md max-w-lg',
+          size === 'lg' && 'flx-modal--lg max-w-2xl',
+          size === 'xl' && 'flx-modal--xl max-w-4xl',
+          size === 'full' && 'flx-modal--full max-w-[calc(100vw-2rem)] h-[calc(100vh-2rem)]'
+        )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

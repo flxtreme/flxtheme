@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'destructive' | 'outline';
@@ -23,12 +24,12 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
         return (
             <span
                 ref={ref}
-                className={[
+                className={cn(
                     'flx-badge inline-flex items-center rounded-full border border-solid font-semibold leading-none',
                     variants[variant],
                     sizes[size],
-                    className,
-                ].filter(Boolean).join(' ')}
+                    className
+                )}
                 {...props}
             />
         );

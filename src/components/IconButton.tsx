@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
@@ -25,13 +26,13 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     return (
       <button
         ref={ref}
-        className={[
+        className={cn(
           'flx-icon-btn inline-flex items-center justify-center rounded-flx border border-solid',
           'cursor-pointer transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed',
           variants[variant],
           sizes[size],
           className,
-        ].filter(Boolean).join(' ')}
+        )}
         {...props}
       >
         {icon}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /* ─── Menu ─── */
 export interface MenuProps extends React.HTMLAttributes<HTMLElement> {
@@ -34,14 +35,12 @@ export interface MenuItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
 
 export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
   ({ active = false, disabled = false, icon, href, onClick, className = '', children, ...props }, ref) => {
-    const classes = [
+    const classes = cn(
       'flx-menu__item',
       active ? 'flx-menu__item--active' : '',
       disabled ? 'flx-menu__item--disabled' : '',
       className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+    );
 
     const content = (
       <>
@@ -50,7 +49,11 @@ export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
       </>
     );
 
-    const linkClasses = `flx-menu__link flex items-center gap-4 w-full py-2 px-7 border-none bg-transparent text-foreground no-underline text-[0.875rem] font-inherit cursor-pointer transition-colors duration-150 text-left ${active ? 'bg-primary/10 text-primary font-semibold' : 'hover:bg-surface-hover'} ${disabled ? 'opacity-45 cursor-not-allowed pointer-events-none' : ''}`;
+    const linkClasses = cn(
+      'flx-menu__link flex items-center gap-4 w-full py-2 px-7 border-none bg-transparent text-foreground no-underline text-[0.875rem] font-inherit cursor-pointer transition-colors duration-150 text-left',
+      active ? 'bg-primary/10 text-primary font-semibold' : 'hover:bg-surface-hover',
+      disabled ? 'opacity-45 cursor-not-allowed pointer-events-none' : ''
+    );
 
     return (
       <li ref={ref} className={classes} {...props}>

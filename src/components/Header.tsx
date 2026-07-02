@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   logo?: React.ReactNode;
@@ -8,13 +9,11 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 
 export const Header = React.forwardRef<HTMLElement, HeaderProps>(
   ({ logo, actions, sticky = true, className = '', children, ...props }, ref) => {
-    const classes = [
+    const classes = cn(
       'flx-header bg-surface z-50',
       sticky ? 'flx-header--sticky sticky top-0' : '',
       className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+    );
 
     return (
       <header ref={ref} className={classes} {...props}>

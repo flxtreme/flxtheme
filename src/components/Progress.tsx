@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
     value: number;
@@ -31,11 +32,11 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
                     aria-valuenow={clamped}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    className={[
+                    className={cn(
                         'flx-progress flex-1 w-full bg-surface-hover rounded-full overflow-hidden',
                         sizes[size],
                         className,
-                    ].filter(Boolean).join(' ')}
+                    )}
                     {...props}
                 >
                     <div

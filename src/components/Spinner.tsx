@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
     size?: 'sm' | 'md' | 'lg';
@@ -23,12 +24,12 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
                 ref={ref}
                 role="status"
                 aria-label="Loading"
-                className={[
+                className={cn(
                     'flx-spinner inline-block rounded-full animate-spin',
                     sizes[size],
                     variants[variant],
-                    className,
-                ].filter(Boolean).join(' ')}
+                    className
+                )}
                 {...props}
             />
         );

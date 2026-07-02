@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiChevronLeft, FiMenu } from 'react-icons/fi';
 import { IconButton } from './IconButton';
+import { cn } from '../utils/cn';
 
 export interface SidebarProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
@@ -40,13 +41,11 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
       onCollapsedChange?.(next);
     };
 
-    const classes = [
+    const classes = cn(
       'flx-sidebar bg-surface border-r border-solid border-border flex flex-col overflow-hidden transition-[width] duration-300 ease-in-out z-40',
       collapsed ? 'flx-sidebar--collapsed' : '',
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+      className
+    );
 
     return (
       <aside
@@ -57,18 +56,25 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
       >
         {/* Header */}
         <div
-          className={`flx-sidebar__header flex items-center h-14 overflow-hidden shrink-0 ${collapsed ? 'justify-center px-4' : 'px-4'
-            }`}
+          className={cn(
+            'flx-sidebar__header flex items-center h-14 overflow-hidden shrink-0',
+            collapsed ? 'justify-center px-4' : 'px-4'
+          )}
         >
           <IconButton className='mr-2' onClick={handleToggle} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} icon={
             <FiChevronLeft
               size={18}
-              className={`transition-all duration-200 ${collapsed ? 'rotate-[180deg]' : ''
-                }`}
+              className={cn(
+                'transition-all duration-200',
+                collapsed ? 'rotate-[180deg]' : ''
+              )}
             />
           } />
 
-          <div className={`flx-sidebar__title flex-1 font-extrabold text-base text-primary tracking-tight truncate transition-opacity duration-200 ${collapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <div className={cn(
+            'flx-sidebar__title flex-1 font-extrabold text-base text-primary tracking-tight truncate transition-opacity duration-200',
+            collapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          )}>
             {title}
           </div>
         </div>

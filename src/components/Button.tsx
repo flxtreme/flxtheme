@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link';
@@ -22,7 +23,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClass = 'flx-btn inline-flex items-center justify-center gap-2 font-semibold border-none rounded-flx cursor-pointer transition-all duration-200 whitespace-nowrap select-none outline-none relative overflow-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40 disabled:opacity-50 disabled:cursor-not-allowed';
-    
+
     const variantClasses: Record<string, string> = {
       primary: 'flx-btn--primary bg-primary text-white hover:enabled:bg-primary-hover hover:enabled:-translate-y-[1px] hover:enabled:shadow-[0_4px_12px_rgba(99,102,241,0.4)]',
       secondary: 'flx-btn--secondary bg-secondary text-white hover:enabled:bg-secondary-hover hover:enabled:-translate-y-[1px] hover:enabled:shadow-[0_4px_12px_rgba(139,92,246,0.4)]',
@@ -40,16 +41,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       xl: 'flx-btn--xl text-lg px-8 py-3'
     };
 
-    const classes = [
+    const classes = cn(
       baseClass,
       variantClasses[variant],
       sizeClasses[size],
       fullWidth ? 'flx-btn--full w-full' : '',
       loading ? 'flx-btn--loading' : '',
       className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+    );
 
     return (
       <button
@@ -59,7 +58,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading && <span className="flx-btn__spinner w-[1em] h-[1em] border-2 border-white/30 border-t-current rounded-full animate-spin" aria-hidden="true" />}
-        <span className={loading ? 'flx-btn__content--loading opacity-70' : ''}>{children}</span>
+        <span className={cn(loading ? 'flx-btn__content--loading opacity-70' : '')}>{children}</span>
       </button>
     );
   }

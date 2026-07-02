@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   title?: string;
@@ -8,13 +9,11 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 
 export const Section = React.forwardRef<HTMLElement, SectionProps>(
   ({ title, subtitle, padded = true, className = '', children, ...props }, ref) => {
-    const classes = [
+    const classes = cn(
       'flx-section w-full max-w-7xl mx-auto',
       padded ? 'flx-section--padded py-12 px-6 md:py-16 md:px-8' : '',
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+      className
+    );
 
     return (
       <section ref={ref} className={classes} {...props}>

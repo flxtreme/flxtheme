@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useCallback, useState, useEffect, useMemo } from 'react';
 import { FiInfo, FiCheckCircle, FiAlertTriangle, FiXCircle, FiX } from '../icons/fi';
+import { cn } from '../utils/cn';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export type ToastVariant = 'info' | 'success' | 'warning' | 'error';
@@ -56,13 +57,13 @@ function ToastItemEl({ item, onDismiss }: { item: ToastItem; onDismiss: (id: str
         <div
             role="status"
             aria-live="polite"
-            className={[
+            className={cn(
                 'flx-toast flex items-start gap-3 rounded-flx border border-solid shadow-lg px-4 py-3 text-sm',
                 'min-w-[280px] max-w-sm w-full pointer-events-auto',
                 'transition-all duration-300',
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
-                wrap,
-            ].filter(Boolean).join(' ')}
+                wrap
+            )}
         >
             {icon}
             <div className="flex-1 flex flex-col gap-0.5">
