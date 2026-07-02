@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/flxtreme/flxtheme/compare/v1.1.0...v1.2.0) (2026-07-02)
+
+
+### Features
+
+* add shared utility modules and standardize class merging ([2d5e755](https://github.com/flxtreme/flxtheme/commit/2d5e7556919f8a4f53b317f577b36743be67d495))
+
 ## [1.1.0](https://github.com/flxtreme/flxtheme/compare/v1.0.0...v1.1.0) (2026-07-02)
 
 
