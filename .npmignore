@@ -1,0 +1,13 @@
+# Exclude everything except dist (already handled by "files" in package.json)
+# This is a safety net
+test-app/
+scripts/
+src/
+*.config.ts
+*.config.js
+.github/
+CLAUDE.md
+GEMINI.md
+SETUP.md
+TODO.md
+cliff.toml
