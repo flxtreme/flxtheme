@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/flxtreme/flxtheme/compare/v1.0.0...v1.1.0) (2026-07-02)
+
+
+### Features
+
+* test-app to use npm flxtheme ([5202638](https://github.com/flxtreme/flxtheme/commit/52026385b9c9a66c4f594fdbdab9c827a4385a12))
+
 ## 1.0.0 (2026-07-02)
 
 
