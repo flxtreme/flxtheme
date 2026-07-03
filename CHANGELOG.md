@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/flxtreme/flxtheme/compare/v1.2.0...v1.3.0) (2026-07-03)
+
+
+### Features
+
+* **components:** add Tooltip, Popover, Drawer, ContextMenu, and CommandPalette ([9cc84f2](https://github.com/flxtreme/flxtheme/commit/9cc84f2b634792f842859c531aa5e822dde0c5c6))
+
 ## [1.2.0](https://github.com/flxtreme/flxtheme/compare/v1.1.0...v1.2.0) (2026-07-02)
 
 
