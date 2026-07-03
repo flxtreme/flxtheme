@@ -69,3 +69,18 @@ export type { ProgressProps } from './Progress';
 
 export { Spinner } from './Spinner';
 export type { SpinnerProps } from './Spinner';
+
+export { Tooltip } from './Tooltip';
+export type { TooltipProps } from './Tooltip';
+
+export { Popover } from './Popover';
+export type { PopoverProps } from './Popover';
+
+export { Drawer } from './Drawer';
+export type { DrawerProps } from './Drawer';
+
+export { ContextMenu } from './ContextMenu';
+export type { ContextMenuProps } from './ContextMenu';
+
+export { CommandPalette } from './CommandPalette';
+export type { CommandPaletteProps } from './CommandPalette';

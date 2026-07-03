@@ -17,7 +17,7 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     {
       collapsed: controlledCollapsed,
       onCollapsedChange,
-      width = '228px',
+      width = '280px',
       collapsedWidth = '80px',
       title,
       className = '',
