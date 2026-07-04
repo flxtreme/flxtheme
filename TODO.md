@@ -2,11 +2,11 @@
 
 ## Navigation
 
-- [ ] **Tabs** — horizontal or vertical tabbed panels
-- [ ] **Breadcrumb** — hierarchical location trail
-- [ ] **Pagination** — page number controls
+- [x] **Tabs** — horizontal or vertical tabbed panels
+- [x] **Breadcrumb** — hierarchical location trail
+- [x] **Pagination** — page number controls
 
-- [ ] **Stepper** — multi-step process indicator
+- [x] **Stepper** — multi-step process indicator
 
 ## Overlay & Interaction
 

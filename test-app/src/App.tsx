@@ -12,6 +12,9 @@ import {
   Badge, Spinner, Skeleton, Progress, Alert,
   Toast, ToastProvider, useToast,
   Tooltip, Popover, Drawer, ContextMenu, CommandPalette,
+  Tabs, TabsList, TabsTrigger, TabsContent,
+  Breadcrumb, BreadcrumbItem,
+  Pagination, Stepper,
 } from 'flxtheme';
 import {
   FiHome, FiUsers, FiSettings, FiBarChart2,
@@ -47,6 +50,10 @@ const NAV_GROUPS = [
   {
     title: 'Navigation',
     items: [
+      { id: 'tabs', label: 'Tabs', icon: <FiColumns /> },
+      { id: 'breadcrumb', label: 'Breadcrumb', icon: <FiChevronRight /> },
+      { id: 'pagination', label: 'Pagination', icon: <FiList /> },
+      { id: 'stepper', label: 'Stepper', icon: <FiLayout /> },
       { id: 'dropdown', label: 'Dropdown', icon: <FiChevronDown /> },
       { id: 'menu', label: 'Menu', icon: <FiList /> },
     ],
@@ -638,6 +645,173 @@ import { FiPlus, FiTrash2 } from 'flxtheme/icons/fi';
           <Divider />
 
           {/* ── NAVIGATION ── */}
+          <Anchor id="tabs">
+            <Section title="Tabs" subtitle="Horizontal or vertical tabbed panels · controlled state" padded={false}>
+              <Code>{`import { Tabs, TabsList, TabsTrigger, TabsContent } from 'flxtheme';
+
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+    <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content for tab 1</TabsContent>
+  <TabsContent value="tab2">Content for tab 2</TabsContent>
+  <TabsContent value="tab3">Content for tab 3</TabsContent>
+</Tabs>`}</Code>
+              <Label>Horizontal (default)</Label>
+              <Preview>
+                <Tabs defaultValue="account" className="w-full">
+                  <TabsList>
+                    <TabsTrigger value="account">Account</TabsTrigger>
+                    <TabsTrigger value="password">Password</TabsTrigger>
+                    <TabsTrigger value="notifications">Notifications</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="account"><p className="text-sm text-muted-foreground">Manage your account settings and preferences.</p></TabsContent>
+                  <TabsContent value="password"><p className="text-sm text-muted-foreground">Change your password and security options.</p></TabsContent>
+                  <TabsContent value="notifications"><p className="text-sm text-muted-foreground">Control how you receive notifications.</p></TabsContent>
+                </Tabs>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'defaultValue', type: 'string', def: '—', desc: 'Default active tab value' },
+                { name: 'value', type: 'string', def: '—', desc: 'Controlled active tab value' },
+                { name: 'onValueChange', type: 'function', def: '—', desc: 'Called when tab changes' },
+                { name: 'direction', type: 'string', def: "'horizontal'", desc: 'horizontal | vertical' },
+                { name: 'TabsTrigger.value', type: 'string', def: '—', desc: 'Unique value for this tab' },
+                { name: 'TabsContent.value', type: 'string', def: '—', desc: 'Shows when parent tab is active' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="breadcrumb">
+            <Section title="Breadcrumb" subtitle="Hierarchical location trail · active state · navigation links" padded={false}>
+              <Code>{`import { Breadcrumb, BreadcrumbItem } from 'flxtheme';
+
+<Breadcrumb separator="/">
+  <BreadcrumbItem href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem href="/products">Products</BreadcrumbItem>
+  <BreadcrumbItem isActive>Details</BreadcrumbItem>
+</Breadcrumb>`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <Breadcrumb separator="/">
+                  <BreadcrumbItem href="#">Home</BreadcrumbItem>
+                  <BreadcrumbItem href="#">Documentation</BreadcrumbItem>
+                  <BreadcrumbItem href="#">Components</BreadcrumbItem>
+                  <BreadcrumbItem isActive>Breadcrumb</BreadcrumbItem>
+                </Breadcrumb>
+              </Preview>
+              <Label>Custom separator</Label>
+              <Preview>
+                <Breadcrumb separator=">">
+                  <BreadcrumbItem href="#">Dashboard</BreadcrumbItem>
+                  <BreadcrumbItem href="#">Reports</BreadcrumbItem>
+                  <BreadcrumbItem isActive>Analytics</BreadcrumbItem>
+                </Breadcrumb>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'separator', type: 'ReactNode', def: "'/'", desc: 'Divider between items' },
+                { name: 'BreadcrumbItem.href', type: 'string', def: '—', desc: 'Renders as <a> tag' },
+                { name: 'BreadcrumbItem.isActive', type: 'boolean', def: 'false', desc: 'Highlights as current page' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="pagination">
+            <Section title="Pagination" subtitle="Page number controls · Previous/Next buttons · smart range" padded={false}>
+              <Code>{`import { Pagination } from 'flxtheme';
+import { useState } from 'react';
+
+const [page, setPage] = useState(1);
+
+<Pagination 
+  total={100} 
+  current={page} 
+  pageSize={10} 
+  onPageChange={setPage}
+  showTotal
+/>`}</Code>
+              <Label>Example (25 items, 10 per page)</Label>
+              <Preview column>
+                <Pagination 
+                  total={25} 
+                  current={1} 
+                  pageSize={10} 
+                  onPageChange={() => {}} 
+                  showTotal
+                />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'total', type: 'number', def: '—', desc: 'Total items (required)' },
+                { name: 'current', type: 'number', def: '—', desc: 'Current page number (required)' },
+                { name: 'pageSize', type: 'number', def: '10', desc: 'Items per page' },
+                { name: 'onPageChange', type: 'function', def: '—', desc: 'Called with new page number' },
+                { name: 'showTotal', type: 'boolean', def: 'true', desc: 'Shows total item count' },
+                { name: 'showQuickJumper', type: 'boolean', def: 'false', desc: 'Input to jump to page (reserved)' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="stepper">
+            <Section title="Stepper" subtitle="Multi-step process indicator · completed/error states · clickable steps" padded={false}>
+              <Code>{`import { Stepper } from 'flxtheme';
+import { useState } from 'react';
+
+const [current, setCurrent] = useState(0);
+
+const steps = [
+  { id: 1, label: 'Step 1', description: 'Account details' },
+  { id: 2, label: 'Step 2', description: 'Verification' },
+  { id: 3, label: 'Step 3', description: 'Confirmation' },
+];
+
+<Stepper steps={steps} currentStep={current} onStepChange={setCurrent} />`}</Code>
+              <Label>Horizontal</Label>
+              <Preview>
+                <Stepper 
+                  steps={[
+                    { id: 1, label: 'Personal Info', completed: true },
+                    { id: 2, label: 'Address', completed: true },
+                    { id: 3, label: 'Payment' },
+                    { id: 4, label: 'Review' },
+                  ]}
+                  currentStep={2}
+                  orientation="horizontal"
+                  onStepChange={() => {}}
+                />
+              </Preview>
+              <Label>With descriptions and error</Label>
+              <Preview column>
+                <Stepper 
+                  steps={[
+                    { id: 1, label: 'Step 1', description: 'Complete', completed: true },
+                    { id: 2, label: 'Step 2', description: 'Current step' },
+                    { id: 3, label: 'Step 3', description: 'Pending', error: false },
+                  ]}
+                  currentStep={1}
+                  orientation="horizontal"
+                  onStepChange={() => {}}
+                />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'steps', type: 'StepperStep[]', def: '—', desc: 'Array of step objects' },
+                { name: 'currentStep', type: 'number', def: '—', desc: 'Current step index' },
+                { name: 'onStepChange', type: 'function', def: '—', desc: 'Called when step clicked' },
+                { name: 'orientation', type: 'string', def: "'horizontal'", desc: 'horizontal | vertical' },
+                { name: 'clickable', type: 'boolean', def: 'true', desc: 'Allow clicking steps' },
+                { name: 'step.id', type: 'string|number', def: '—', desc: 'Unique identifier' },
+                { name: 'step.label', type: 'string', def: '—', desc: 'Step title' },
+                { name: 'step.description', type: 'string', def: '—', desc: 'Optional description' },
+                { name: 'step.completed', type: 'boolean', def: 'false', desc: 'Shows checkmark' },
+                { name: 'step.error', type: 'boolean', def: 'false', desc: 'Shows error state' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
           <Anchor id="dropdown">
             <Section title="Dropdown" subtitle="Click-triggered popup menu with outside-click dismissal" padded={false}>
               <Code>{`import { Dropdown, DropdownItem, DropdownDivider, Button } from 'flxtheme';

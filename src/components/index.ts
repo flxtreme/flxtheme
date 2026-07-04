@@ -84,3 +84,16 @@ export type { ContextMenuProps } from './ContextMenu';
 
 export { CommandPalette } from './CommandPalette';
 export type { CommandPaletteProps } from './CommandPalette';
+
+/* Navigation */
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
+export type { TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from './Tabs';
+
+export { Breadcrumb, BreadcrumbItem } from './Breadcrumb';
+export type { BreadcrumbProps, BreadcrumbItemProps } from './Breadcrumb';
+
+export { Pagination } from './Pagination';
+export type { PaginationProps } from './Pagination';
+
+export { Stepper } from './Stepper';
+export type { StepperProps, StepperStep } from './Stepper';
