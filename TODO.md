@@ -10,11 +10,11 @@
 
 ## Overlay & Interaction
 
-- [ ] **Tooltip** — hover label on any element
-- [ ] **Popover** — richer hover/click overlay with content
-- [ ] **Drawer** — slide-in panel from any edge
-- [ ] **ContextMenu** — right-click triggered menu
-- [ ] **CommandPalette** — ⌘K search and action launcher
+- [x] **Tooltip** — hover label on any element
+- [x] **Popover** — richer hover/click overlay with content
+- [x] **Drawer** — slide-in panel from any edge
+- [x] **ContextMenu** — right-click triggered menu
+- [x] **CommandPalette** — ⌘K search and action launcher
 
 ## Data & Display
 
@@ -29,14 +29,14 @@
 
 ## Form & Input
 
-- [ ] **RadioGroup** — mutually exclusive options
-- [ ] **Switch / Toggle** — on/off boolean control
-- [ ] **Slider** — range value picker
-- [ ] **DatePicker** — calendar input
-- [ ] **FileUpload** — drag-and-drop file zone
-- [ ] **OTPInput** — digit-by-digit code entry
-- [ ] **ColorPicker** — hex/hsl color selector
-- [ ] **ComboBox** — searchable select with filtering
+- [x] **RadioGroup** — mutually exclusive options
+- [x] **Switch / Toggle** — on/off boolean control
+- [x] **Slider** — range value picker
+- [x] **DatePicker** — calendar input
+- [x] **FileUpload** — drag-and-drop file zone
+- [x] **OTPInput** — digit-by-digit code entry
+- [x] **ColorPicker** — hex/hsl color selector
+- [x] **ComboBox** — searchable select with filtering
 
 ## Layout
 
