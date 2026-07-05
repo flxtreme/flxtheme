@@ -16,6 +16,7 @@ import {
   Breadcrumb, BreadcrumbItem,
   Pagination, Stepper,
   RadioGroup, Switch, Slider, DatePicker, FileUpload, OTPInput, ColorPicker, ComboBox,
+  Container, Grid, Stack, Flex, AspectRatio, Divider as FlxDivider,
 } from 'flxtheme';
 import {
   FiHome, FiUsers, FiSettings, FiBarChart2,
@@ -46,6 +47,12 @@ const NAV_GROUPS = [
       { id: 'hero', label: 'Hero', icon: <FiImage /> },
       { id: 'section', label: 'Section', icon: <FiColumns /> },
       { id: 'sidebar', label: 'Sidebar', icon: <FiColumns /> },
+      { id: 'container', label: 'Container', icon: <FiBox /> },
+      { id: 'grid', label: 'Grid', icon: <FiGrid /> },
+      { id: 'stack', label: 'Stack', icon: <FiColumns /> },
+      { id: 'flex', label: 'Flex', icon: <FiLayout /> },
+      { id: 'divider', label: 'Divider', icon: <FiColumns /> },
+      { id: 'aspectratio', label: 'AspectRatio', icon: <FiImage /> },
     ],
   },
   {
@@ -651,6 +658,118 @@ import { FiPlus, FiTrash2 } from 'flxtheme/icons/fi';
               ]} />
             </Section>
           </Anchor>
+          
+          <Anchor id="container">
+            <Section title="Container" subtitle="Max-width centered wrapper" padded={false}>
+              <Code>{`import { Container } from 'flxtheme';
+
+<Container size="md" className="bg-surface p-6 rounded">Content</Container>`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <Container size="md" className="bg-surface p-6 rounded w-full"><p className="m-0">Centered container content.</p></Container>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'size', type: 'string', def: "'md'", desc: 'sm | md | lg | xl | full' },
+                { name: 'className', type: 'string', def: "''", desc: 'Additional classes' },
+              ]} />
+            </Section>
+          </Anchor>
+
+          <Anchor id="grid">
+            <Section title="Grid" subtitle="Simple grid helper for columns and gap" padded={false}>
+              <Code>{`import { Grid } from 'flxtheme';
+
+<Grid cols={3} gap="4">{/* items */}</Grid>`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <Grid cols={3} gap="4" className="w-full">
+                  {[1,2,3].map(i => <Card key={i} padding="md" className="min-w-[120px]"><CardBody>Col {i}</CardBody></Card>)}
+                </Grid>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'cols', type: 'number', def: '2', desc: 'Number of columns' },
+                { name: 'gap', type: 'string|number', def: "'4'", desc: 'Tailwind gap value or number' },
+              ]} />
+            </Section>
+          </Anchor>
+
+          <Anchor id="stack">
+            <Section title="Stack" subtitle="Vertical spacing helper" padded={false}>
+              <Code>{`import { Stack } from 'flxtheme';
+
+<Stack gap="3">{/* stacked items */}</Stack>`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <Stack gap="3" className="w-full">
+                  <Button>Item one</Button>
+                  <Button variant="outline">Item two</Button>
+                  <Button variant="ghost">Item three</Button>
+                </Stack>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'gap', type: 'string|number', def: "'4'", desc: 'Tailwind gap value or number' },
+              ]} />
+            </Section>
+          </Anchor>
+
+          <Anchor id="flex">
+            <Section title="Flex" subtitle="Flex container with alignment helpers" padded={false}>
+              <Code>{`import { Flex } from 'flxtheme';
+
+<Flex align="items-center" justify="justify-between">{/* children */}</Flex>`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <Flex align="items-center" justify="justify-between" className="w-full">
+                  <div>Left</div>
+                  <div className="text-muted-foreground">Right</div>
+                </Flex>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'align', type: 'string', def: "'items-center'", desc: 'Tailwind align class' },
+                { name: 'justify', type: 'string', def: "'justify-start'", desc: 'Tailwind justify class' },
+                { name: 'gap', type: 'string|number', def: "'4'", desc: 'Tailwind gap value or number' },
+              ]} />
+            </Section>
+          </Anchor>
+
+          <Anchor id="divider">
+            <Section title="Divider" subtitle="Horizontal or vertical separator" padded={false}>
+              <Code>{`import { Divider } from 'flxtheme';
+
+<Divider orientation="horizontal" thickness="1px" />
+<Divider orientation="vertical" thickness="2px" />`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <div className="flex items-center gap-4 w-full">
+                  <div className="flex-1">Left</div>
+                  <FlxDivider thickness="2px" />
+                  <div className="flex-1">Right</div>
+                </div>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'orientation', type: "'horizontal'|'vertical'", def: "'horizontal'", desc: 'Separator direction' },
+                { name: 'thickness', type: 'string', def: "'1px'", desc: 'CSS size for thickness' },
+              ]} />
+            </Section>
+          </Anchor>
+
+          <Anchor id="aspectratio">
+            <Section title="AspectRatio" subtitle="Constrain content to an aspect ratio" padded={false}>
+              <Code>{`import { AspectRatio } from 'flxtheme';
+
+<AspectRatio ratio={16/9}><img src="/placeholder.jpg" alt="" /></AspectRatio>`}</Code>
+              <Label>Example</Label>
+              <Preview>
+                <AspectRatio ratio={16/9} className="w-full">
+                  <div className="bg-surface w-full h-full flex items-center justify-center">16:9 box</div>
+                </AspectRatio>
+              </Preview>
+              <PropsTable rows={[
+                { name: 'ratio', type: 'number', def: '16/9', desc: 'Width / height ratio' },
+              ]} />
+            </Section>
+          </Anchor>
+
           <Divider />
 
           {/* ── NAVIGATION ── */}
