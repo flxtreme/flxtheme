@@ -15,6 +15,7 @@ import {
   Tabs, TabsList, TabsTrigger, TabsContent,
   Breadcrumb, BreadcrumbItem,
   Pagination, Stepper,
+  RadioGroup, Switch, Slider, DatePicker, FileUpload, OTPInput, ColorPicker, ComboBox,
 } from 'flxtheme';
 import {
   FiHome, FiUsers, FiSettings, FiBarChart2,
@@ -86,6 +87,14 @@ const NAV_GROUPS = [
       { id: 'input', label: 'Input', icon: <FiType /> },
       { id: 'select', label: 'Select', icon: <FiToggleLeft /> },
       { id: 'textarea', label: 'Textarea', icon: <FiAlignLeft /> },
+      { id: 'radiogroup', label: 'RadioGroup', icon: <FiCheckSquare /> },
+      { id: 'switch', label: 'Switch', icon: <FiToggleLeft /> },
+      { id: 'slider', label: 'Slider', icon: <FiMaximize2 /> },
+      { id: 'datepicker', label: 'DatePicker', icon: <FiBox /> },
+      { id: 'fileupload', label: 'FileUpload', icon: <FiDownload /> },
+      { id: 'otpinput', label: 'OTPInput', icon: <FiLock /> },
+      { id: 'colorpicker', label: 'ColorPicker', icon: <FiDroplet /> },
+      { id: 'combobox', label: 'ComboBox', icon: <FiSearch /> },
     ],
   },
   {
@@ -1355,6 +1364,265 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                 { name: 'helperText', type: 'string', def: '—', desc: 'Hint text below' },
                 { name: 'fullWidth', type: 'boolean', def: 'false', desc: 'Stretches to fill container' },
                 { name: 'rows', type: 'number', def: '—', desc: 'Initial visible lines' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="radiogroup">
+            <Section title="RadioGroup" subtitle="Mutually exclusive options · vertical or horizontal · disabled state" padded={false}>
+              <Code>{`import { RadioGroup } from 'flxtheme';
+
+<RadioGroup 
+  options={[
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+  ]}
+  defaultValue="option1"
+  onChange={(value) => console.log(value)}
+/>`}</Code>
+              <Label>Vertical (default)</Label>
+              <Preview column>
+                <RadioGroup 
+                  options={[
+                    { value: 'personal', label: 'Personal' },
+                    { value: 'business', label: 'Business' },
+                    { value: 'nonprofit', label: 'Non-profit' },
+                  ]}
+                  defaultValue="personal"
+                  onChange={() => {}}
+                />
+              </Preview>
+              <Label>Horizontal</Label>
+              <Preview>
+                <RadioGroup 
+                  direction="horizontal"
+                  options={[
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' },
+                    { value: 'maybe', label: 'Maybe' },
+                  ]}
+                  defaultValue="yes"
+                  onChange={() => {}}
+                />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'options', type: 'RadioOption[]', def: '—', desc: 'Array of radio options' },
+                { name: 'value', type: 'string|number', def: '—', desc: 'Controlled selected value' },
+                { name: 'defaultValue', type: 'string|number', def: '—', desc: 'Default selected value' },
+                { name: 'onChange', type: 'function', def: '—', desc: 'Called with selected value' },
+                { name: 'direction', type: 'string', def: "'vertical'", desc: 'vertical | horizontal' },
+                { name: 'option.value', type: 'string|number', def: '—', desc: 'Option value' },
+                { name: 'option.label', type: 'string', def: '—', desc: 'Display label' },
+                { name: 'option.disabled', type: 'boolean', def: 'false', desc: 'Disable option' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="switch">
+            <Section title="Switch" subtitle="On/off toggle control · label and helper text support" padded={false}>
+              <Code>{`import { Switch } from 'flxtheme';
+
+<Switch 
+  label="Enable notifications"
+  helperText="Receive updates via email"
+  checked={enabled}
+  onChange={(e) => setEnabled(e.target.checked)}
+/>`}</Code>
+              <Preview column>
+                <Switch label="Default (unchecked)" />
+                <Switch label="Checked" defaultChecked />
+                <Switch label="With helper" helperText="This feature is optional." defaultChecked />
+                <Switch label="Disabled" disabled />
+                <Switch label="Disabled + checked" disabled defaultChecked />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'label', type: 'string', def: '—', desc: 'Toggle label' },
+                { name: 'helperText', type: 'string', def: '—', desc: 'Helper text below toggle' },
+                { name: 'checked', type: 'boolean', def: '—', desc: 'Controlled state' },
+                { name: 'onChange', type: 'function', def: '—', desc: 'Native change handler' },
+                { name: 'disabled', type: 'boolean', def: 'false', desc: 'Disable toggle' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="slider">
+            <Section title="Slider" subtitle="Range value picker · min/max/step · optional value display" padded={false}>
+              <Code>{`import { Slider } from 'flxtheme';
+
+<Slider 
+  label="Volume"
+  min={0}
+  max={100}
+  defaultValue={50}
+  showValue
+/>`}</Code>
+              <Preview column>
+                <Slider label="Default" min={0} max={100} defaultValue={50} showValue />
+                <Slider label="With step" min={0} max={100} step={10} defaultValue={30} showValue />
+                <Slider label="Custom range" min={-50} max={50} defaultValue={0} showValue />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'label', type: 'string', def: '—', desc: 'Slider label' },
+                { name: 'min', type: 'number', def: '0', desc: 'Minimum value' },
+                { name: 'max', type: 'number', def: '100', desc: 'Maximum value' },
+                { name: 'step', type: 'number', def: '1', desc: 'Step increment' },
+                { name: 'value', type: 'number', def: '50', desc: 'Current value' },
+                { name: 'showValue', type: 'boolean', def: 'true', desc: 'Display current value' },
+                { name: 'marks', type: 'number[]', def: '—', desc: 'Mark positions' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="datepicker">
+            <Section title="DatePicker" subtitle="Native date input · label and error support" padded={false}>
+              <Code>{`import { DatePicker } from 'flxtheme';
+
+<DatePicker 
+  label="Select date"
+  value={date}
+  onChange={(e) => setDate(e.target.value)}
+/>`}</Code>
+              <Preview column>
+                <DatePicker label="Default" />
+                <DatePicker label="With helper" helperText="Pick a date in the future" />
+                <DatePicker label="Error state" error="Please select a valid date" />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'label', type: 'string', def: '—', desc: 'Input label' },
+                { name: 'error', type: 'string', def: '—', desc: 'Error message' },
+                { name: 'helperText', type: 'string', def: '—', desc: 'Helper text below' },
+                { name: 'value', type: 'string', def: '—', desc: 'Selected date (YYYY-MM-DD)' },
+                { name: 'onChange', type: 'function', def: '—', desc: 'Change handler' },
+                { name: 'disabled', type: 'boolean', def: 'false', desc: 'Disable picker' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="fileupload">
+            <Section title="FileUpload" subtitle="Drag-and-drop zone · file preview · size validation" padded={false}>
+              <Code>{`import { FileUpload } from 'flxtheme';
+
+<FileUpload
+  label="Upload documents"
+  accept=".pdf,.docx"
+  helperText="Max 10MB per file"
+  onFilesSelected={(files) => console.log(files)}
+/>`}</Code>
+              <Preview column>
+                <FileUpload
+                  label="Upload files"
+                  accept="*"
+                  helperText="Drag and drop files here or click to browse"
+                  onFilesSelected={() => {}}
+                />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'label', type: 'string', def: "'Upload files'", desc: 'Section label' },
+                { name: 'accept', type: 'string', def: "'*'", desc: 'Accepted file types' },
+                { name: 'multiple', type: 'boolean', def: 'true', desc: 'Allow multiple files' },
+                { name: 'maxSize', type: 'number', def: '—', desc: 'Max file size in bytes' },
+                { name: 'onFilesSelected', type: 'function', def: '—', desc: 'Called with selected files' },
+                { name: 'helperText', type: 'string', def: '—', desc: 'Helper text below zone' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="otpinput">
+            <Section title="OTPInput" subtitle="Digit-by-digit code entry · auto-focus · paste support" padded={false}>
+              <Code>{`import { OTPInput } from 'flxtheme';
+
+<OTPInput 
+  length={6}
+  label="Enter verification code"
+  onComplete={(code) => console.log('Code:', code)}
+/>`}</Code>
+              <Preview column>
+                <OTPInput label="6-digit code" length={6} onComplete={() => {}} />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'length', type: 'number', def: '6', desc: 'Number of input fields' },
+                { name: 'value', type: 'string', def: '—', desc: 'Controlled value' },
+                { name: 'onChange', type: 'function', def: '—', desc: 'Called on each digit change' },
+                { name: 'onComplete', type: 'function', def: '—', desc: 'Called when all digits filled' },
+                { name: 'label', type: 'string', def: '—', desc: 'Input group label' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="colorpicker">
+            <Section title="ColorPicker" subtitle="Hex color input · RGB display · preset colors" padded={false}>
+              <Code>{`import { ColorPicker } from 'flxtheme';
+
+<ColorPicker 
+  label="Choose color"
+  value="#6366f1"
+  showInput
+  onChange={(e) => setColor(e.target.value)}
+/>`}</Code>
+              <Preview column>
+                <ColorPicker 
+                  label="Select a color" 
+                  showInput
+                  presets={['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444']}
+                  onChange={() => {}}
+                />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'label', type: 'string', def: '—', desc: 'Picker label' },
+                { name: 'value', type: 'string', def: "'#6366f1'", desc: 'Hex color value' },
+                { name: 'showInput', type: 'boolean', def: 'true', desc: 'Show hex input field' },
+                { name: 'presets', type: 'string[]', def: '[...]', desc: 'Color preset options' },
+                { name: 'onChange', type: 'function', def: '—', desc: 'Color change handler' },
+                { name: 'helperText', type: 'string', def: '—', desc: 'Helper text below' },
+              ]} />
+            </Section>
+          </Anchor>
+          <Divider />
+
+          <Anchor id="combobox">
+            <Section title="ComboBox" subtitle="Searchable dropdown · filterable · keyboard navigation" padded={false}>
+              <Code>{`import { ComboBox } from 'flxtheme';
+
+<ComboBox
+  label="Select country"
+  placeholder="Search countries…"
+  options={[
+    { value: 'us', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'ca', label: 'Canada' },
+  ]}
+  onChange={(value) => console.log(value)}
+/>`}</Code>
+              <Preview column>
+                <ComboBox
+                  label="Choose option"
+                  placeholder="Type to filter…"
+                  options={[
+                    { value: 1, label: 'Apple' },
+                    { value: 2, label: 'Banana' },
+                    { value: 3, label: 'Cherry' },
+                    { value: 4, label: 'Date' },
+                  ]}
+                  onChange={() => {}}
+                />
+              </Preview>
+              <PropsTable rows={[
+                { name: 'options', type: 'ComboBoxOption[]', def: '—', desc: 'Dropdown options' },
+                { name: 'value', type: 'string|number', def: '—', desc: 'Selected value' },
+                { name: 'onChange', type: 'function', def: '—', desc: 'Selection handler' },
+                { name: 'placeholder', type: 'string', def: "'Select an option…'", desc: 'Placeholder text' },
+                { name: 'label', type: 'string', def: '—', desc: 'Input label' },
+                { name: 'searchable', type: 'boolean', def: 'true', desc: 'Enable search filtering' },
+                { name: 'clearable', type: 'boolean', def: 'true', desc: 'Show clear button' },
+                { name: 'error', type: 'string', def: '—', desc: 'Error message' },
+                { name: 'helperText', type: 'string', def: '—', desc: 'Helper text' },
               ]} />
             </Section>
           </Anchor>
