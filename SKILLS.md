@@ -21,6 +21,7 @@ prefix: short commit title
 3. use conventional commit prefixes: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
 4. auto-run: `git add -A && git commit -m "message"`
 5. if scope applies, use `prefix(scope): title` format
+6. reply done only once finished, no need to explain.
 
 ## generate-commit-message
 
@@ -43,3 +44,4 @@ prefix: short commit title
 ```
 
 3. use conventional commit prefixes: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
+4. reply done only once finished, no need to explain.

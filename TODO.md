@@ -40,7 +40,7 @@
 
 ## Layout
 
-- [ ] **Grid / Stack / Flex** — layout utility wrappers
-- [ ] **Divider** — horizontal or vertical separator
-- [ ] **Container** — max-width centered wrapper
-- [ ] **AspectRatio** — constrained ratio box
+- [x] **Grid / Stack / Flex** — layout utility wrappers
+- [x] **Divider** — horizontal or vertical separator
+- [x] **Container** — max-width centered wrapper
+- [x] **AspectRatio** — constrained ratio box
