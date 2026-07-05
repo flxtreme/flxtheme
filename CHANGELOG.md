@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/flxtreme/flxtheme/compare/v1.3.0...v1.4.0) (2026-07-05)
+
+
+### Features
+
+* **form:** add RadioGroup, Switch, Slider, DatePicker, FileUpload, OTPInput, ColorPicker, ComboBox ([f8450ee](https://github.com/flxtreme/flxtheme/commit/f8450ee5363d49cdf807e9ce91eeccee4fcd6de5))
+* **layout:** add layout components ([42979c6](https://github.com/flxtreme/flxtheme/commit/42979c6f1adc699af8fe144e88767e0c0c8e9399))
+* **navigation:** add Tabs, Breadcrumb, Pagination, and Stepper components ([94cd3ef](https://github.com/flxtreme/flxtheme/commit/94cd3ef87e182492889b744aae8b6d633e2dae55))
+
 ## [1.3.0](https://github.com/flxtreme/flxtheme/compare/v1.2.0...v1.3.0) (2026-07-03)
 
 
