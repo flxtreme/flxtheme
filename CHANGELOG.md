@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1](https://github.com/flxtreme/flxtheme/compare/v1.4.0...v1.4.1) (2026-07-05)
+
+
+### Bug Fixes
+
+* **components:** update component types and add new components ([ce9def1](https://github.com/flxtreme/flxtheme/commit/ce9def1164963733c4177d1cd761b2c3fba6e2ca))
+
 ## [1.4.0](https://github.com/flxtreme/flxtheme/compare/v1.3.0...v1.4.0) (2026-07-05)
 
 
