@@ -11,7 +11,7 @@ export interface RadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   options: RadioOption[];
   value?: string | number;
   defaultValue?: string | number;
-  onChange?: (value: string | number) => void;
+  onValueChange?: (value: string | number) => void;
   direction?: 'vertical' | 'horizontal';
   name?: string;
 }
@@ -22,7 +22,7 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
       options,
       value,
       defaultValue,
-      onChange,
+      onValueChange,
       direction = 'vertical',
       name = 'radio-group',
       className = '',
@@ -34,7 +34,7 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
 
     const handleChange = (newValue: string | number) => {
       setSelectedValue(newValue);
-      onChange?.(newValue);
+      onValueChange?.(newValue);
     };
 
     return (

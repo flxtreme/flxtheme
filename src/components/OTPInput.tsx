@@ -4,7 +4,7 @@ import { cn } from '../utils/cn';
 export interface OTPInputProps extends React.HTMLAttributes<HTMLDivElement> {
   length?: number;
   value?: string;
-  onChange?: (value: string) => void;
+  onValueChange?: (value: string) => void;
   onComplete?: (value: string) => void;
   label?: string;
 }
@@ -14,7 +14,7 @@ export const OTPInput = React.forwardRef<HTMLDivElement, OTPInputProps>(
     {
       length = 6,
       value = '',
-      onChange,
+      onValueChange,
       onComplete,
       label,
       className = '',
@@ -33,7 +33,7 @@ export const OTPInput = React.forwardRef<HTMLDivElement, OTPInputProps>(
       setOtp(newOtp);
 
       const otpValue = newOtp.join('');
-      onChange?.(otpValue);
+      onValueChange?.(otpValue);
 
       if (newOtp.every(d => d !== '') && newOtp.length === length) {
         onComplete?.(otpValue);
@@ -65,7 +65,7 @@ export const OTPInput = React.forwardRef<HTMLDivElement, OTPInputProps>(
       if (digits.length === length) {
         setOtp(digits);
         const otpValue = digits.join('');
-        onChange?.(otpValue);
+        onValueChange?.(otpValue);
         onComplete?.(otpValue);
       }
     };

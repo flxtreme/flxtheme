@@ -1498,7 +1498,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
     { value: 'option2', label: 'Option 2' },
   ]}
   defaultValue="option1"
-  onChange={(value) => console.log(value)}
+  onValueChange={(value) => console.log(value)}
 />`}</Code>
               <Label>Vertical (default)</Label>
               <Preview column>
@@ -1509,7 +1509,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                     { value: 'nonprofit', label: 'Non-profit' },
                   ]}
                   defaultValue="personal"
-                  onChange={() => {}}
+                  onValueChange={() => {}}
                 />
               </Preview>
               <Label>Horizontal</Label>
@@ -1615,7 +1615,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                 { name: 'error', type: 'string', def: '—', desc: 'Error message' },
                 { name: 'helperText', type: 'string', def: '—', desc: 'Helper text below' },
                 { name: 'value', type: 'string', def: '—', desc: 'Selected date (YYYY-MM-DD)' },
-                { name: 'onChange', type: 'function', def: '—', desc: 'Change handler' },
+                { name: 'onValueChange', type: 'function', def: '—', desc: 'Change handler' },
                 { name: 'disabled', type: 'boolean', def: 'false', desc: 'Disable picker' },
               ]} />
             </Section>
@@ -1667,7 +1667,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
               <PropsTable rows={[
                 { name: 'length', type: 'number', def: '6', desc: 'Number of input fields' },
                 { name: 'value', type: 'string', def: '—', desc: 'Controlled value' },
-                { name: 'onChange', type: 'function', def: '—', desc: 'Called on each digit change' },
+                { name: 'onValueChange', type: 'function', def: '—', desc: 'Called on each digit change' },
                 { name: 'onComplete', type: 'function', def: '—', desc: 'Called when all digits filled' },
                 { name: 'label', type: 'string', def: '—', desc: 'Input group label' },
               ]} />
@@ -1717,7 +1717,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
     { value: 'uk', label: 'United Kingdom' },
     { value: 'ca', label: 'Canada' },
   ]}
-  onChange={(value) => console.log(value)}
+  onValueChange={(value) => console.log(value)}
 />`}</Code>
               <Preview column>
                 <ComboBox
@@ -1729,13 +1729,13 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                     { value: 3, label: 'Cherry' },
                     { value: 4, label: 'Date' },
                   ]}
-                  onChange={() => {}}
+                  onValueChange={() => {}}
                 />
               </Preview>
               <PropsTable rows={[
                 { name: 'options', type: 'ComboBoxOption[]', def: '—', desc: 'Dropdown options' },
                 { name: 'value', type: 'string|number', def: '—', desc: 'Selected value' },
-                { name: 'onChange', type: 'function', def: '—', desc: 'Selection handler' },
+                { name: 'onValueChange', type: 'function', def: '—', desc: 'Selection handler' },
                 { name: 'placeholder', type: 'string', def: "'Select an option…'", desc: 'Placeholder text' },
                 { name: 'label', type: 'string', def: '—', desc: 'Input label' },
                 { name: 'searchable', type: 'boolean', def: 'true', desc: 'Enable search filtering' },

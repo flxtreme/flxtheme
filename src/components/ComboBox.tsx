@@ -9,8 +9,8 @@ export interface ComboBoxOption {
 
 export interface ComboBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   options: ComboBoxOption[];
-  value?: string | number;
-  onChange?: (value: string | number) => void;
+  value?: string | number | null;
+  onValueChange?: (value: string | number | null) => void;
   placeholder?: string;
   label?: string;
   searchable?: boolean;
@@ -25,7 +25,7 @@ export const ComboBox = React.forwardRef<HTMLDivElement, ComboBoxProps>(
     {
       options,
       value,
-      onChange,
+      onValueChange,
       placeholder = 'Select an option...',
       label,
       searchable = true,
@@ -60,14 +60,14 @@ export const ComboBox = React.forwardRef<HTMLDivElement, ComboBoxProps>(
     }, []);
 
     const handleSelect = (optionValue: string | number) => {
-      onChange?.(optionValue);
+      onValueChange?.(optionValue);
       setOpen(false);
       setSearchText('');
     };
 
     const handleClear = (e: React.MouseEvent) => {
       e.stopPropagation();
-      onChange?.(null as any);
+      onValueChange?.(null);
       setSearchText('');
     };
 
