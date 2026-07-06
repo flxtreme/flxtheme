@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.1](https://github.com/flxtreme/flxtheme/compare/v1.5.0...v1.5.1) (2026-07-06)
+
+
+### Bug Fixes
+
+* **ListItem:** rename ListItem title prop to avoid HTML attribute clash ([86da343](https://github.com/flxtreme/flxtheme/commit/86da343a0dc8c010cd5e1a38800cd2a043c6722c))
+
 ## [1.5.0](https://github.com/flxtreme/flxtheme/compare/v1.4.1...v1.5.0) (2026-07-06)
 
 
