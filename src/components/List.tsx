@@ -32,7 +32,7 @@ export const List = React.forwardRef<HTMLUListElement, ListProps>(
 
 List.displayName = 'List';
 
-export interface ListItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
+export interface ListItemProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'title'> {
   leading?: React.ReactNode;
   trailing?: React.ReactNode;
   title?: React.ReactNode;
