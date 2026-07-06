@@ -17,6 +17,7 @@ import {
   Pagination, Stepper,
   RadioGroup, Switch, Slider, DatePicker, FileUpload, OTPInput, ColorPicker, ComboBox,
   Container, Grid, Stack, Flex, AspectRatio, Divider as FlxDivider,
+  Accordion,
 } from 'flxtheme';
 import {
   FiHome, FiUsers, FiSettings, FiBarChart2,
@@ -33,6 +34,7 @@ import {
 const NAV_GROUPS = [
   {
     title: 'Setup',
+    expand: true,
     items: [
       { id: 'overview', label: 'Overview', icon: <FiBookOpen /> },
       { id: 'installation', label: 'Installation', icon: <FiDownload /> },
@@ -42,6 +44,7 @@ const NAV_GROUPS = [
   },
   {
     title: 'Layout',
+    expand: false,
     items: [
       { id: 'header', label: 'Header', icon: <FiLayout /> },
       { id: 'hero', label: 'Hero', icon: <FiImage /> },
@@ -57,6 +60,7 @@ const NAV_GROUPS = [
   },
   {
     title: 'Navigation',
+    expand: false,
     items: [
       { id: 'tabs', label: 'Tabs', icon: <FiColumns /> },
       { id: 'breadcrumb', label: 'Breadcrumb', icon: <FiChevronRight /> },
@@ -68,6 +72,7 @@ const NAV_GROUPS = [
   },
   {
     title: 'Data Display',
+    expand: false,
     items: [
       { id: 'badge', label: 'Badge', icon: <FiTag /> },
       { id: 'card', label: 'Card', icon: <FiGrid /> },
@@ -76,6 +81,7 @@ const NAV_GROUPS = [
   },
   {
     title: 'Feedback & Status',
+    expand: false,
     items: [
       { id: 'alert', label: 'Alert', icon: <FiAlertCircle /> },
       { id: 'progress', label: 'Progress', icon: <FiTrendingUp /> },
@@ -86,6 +92,7 @@ const NAV_GROUPS = [
   },
   {
     title: 'Forms & Inputs',
+    expand: false,
     items: [
       { id: 'button', label: 'Button', icon: <FiSquare /> },
       { id: 'checkbox', label: 'Checkbox', icon: <FiCheckSquare /> },
@@ -106,6 +113,7 @@ const NAV_GROUPS = [
   },
   {
     title: 'Overlay & Interaction',
+    expand: false,
     items: [
       { id: 'commandpalette', label: 'CommandPalette', icon: <FiTerminal /> },
       { id: 'contextmenu', label: 'ContextMenu', icon: <FiMousePointer /> },
@@ -314,25 +322,43 @@ function DocsContent() {
   return (
     <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar collapsed={navCollapsed} onCollapsedChange={setNavCollapsed} title="flxtheme" className="h-full shrink-0 shadow">
-        <div className="flex flex-col h-full">
-          <div>
-            {NAV_GROUPS.map((group, gi) => (
-              <div key={group.title} className={gi < NAV_GROUPS.length - 1 ? 'mb-5' : ''}>
-                <div className="relative h-3.5 mb-2 flex items-center">
-                  <p className={`absolute px-7 inset-0 text-xs font-bold uppercase tracking-wider leading-none whitespace-nowrap text-muted-foreground transition-opacity duration-200 ${navCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>{group.title}</p>
-                  <div className={`h-0.5 w-full bg-border rounded-full transition-opacity duration-200 ${navCollapsed ? 'opacity-100' : 'opacity-0'}`} />
+          {navCollapsed ? (
+            <div>
+              {NAV_GROUPS.map((group, gi) => (
+                <div key={group.title} className={gi < NAV_GROUPS.length - 1 ? 'mb-5' : ''}>
+                  <div className="relative h-3.5 mb-2 flex items-center">
+                    <div className="h-0.5 w-full bg-border rounded-full" />
+                  </div>
+                  <Menu orientation="vertical">
+                    {group.items.map(s => (
+                      <Tooltip key={s.id} content={s.label} side="right">
+                        <MenuItem icon={s.icon} active={activeSection === s.id} onClick={() => scrollTo(s.id)} aria-label={s.label} className="py-1" />
+                      </Tooltip>
+                    ))}
+                  </Menu>
                 </div>
-                <Menu orientation="vertical">
-                  {group.items.map(s => (
-                    <MenuItem key={s.id} icon={s.icon} active={activeSection === s.id} onClick={() => scrollTo(s.id)} aria-label={s.label} className="py-1">
-                      <span className={`transition-opacity duration-200 ${navCollapsed ? 'opacity-0' : 'opacity-100'}`}>{s.label}</span>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+          ) : (
+            <Accordion
+              bordered={false}
+              type="multiple"
+              defaultOpen={NAV_GROUPS.filter(g => g.expand).map(g => g.title)}
+              items={NAV_GROUPS.map(group => ({
+                id: group.title,
+                title: group.title,
+                content: (
+                  <Menu orientation="vertical">
+                    {group.items.map(s => (
+                      <MenuItem key={s.id} icon={s.icon} active={activeSection === s.id} onClick={() => scrollTo(s.id)} aria-label={s.label} className="py-1">
+                        <span>{s.label}</span>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                ),
+              }))}
+            />
+          )}
       </Sidebar>
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
@@ -658,7 +684,7 @@ import { FiPlus, FiTrash2 } from 'flxtheme/icons/fi';
               ]} />
             </Section>
           </Anchor>
-          
+
           <Anchor id="container">
             <Section title="Container" subtitle="Max-width centered wrapper" padded={false}>
               <Code>{`import { Container } from 'flxtheme';
@@ -683,7 +709,7 @@ import { FiPlus, FiTrash2 } from 'flxtheme/icons/fi';
               <Label>Example</Label>
               <Preview>
                 <Grid cols={3} gap="4" className="w-full">
-                  {[1,2,3].map(i => <Card key={i} padding="md" className="min-w-[120px]"><CardBody>Col {i}</CardBody></Card>)}
+                  {[1, 2, 3].map(i => <Card key={i} padding="md" className="min-w-[120px]"><CardBody>Col {i}</CardBody></Card>)}
                 </Grid>
               </Preview>
               <PropsTable rows={[
@@ -760,7 +786,7 @@ import { FiPlus, FiTrash2 } from 'flxtheme/icons/fi';
 <AspectRatio ratio={16/9}><img src="/placeholder.jpg" alt="" /></AspectRatio>`}</Code>
               <Label>Example</Label>
               <Preview>
-                <AspectRatio ratio={16/9} className="w-full">
+                <AspectRatio ratio={16 / 9} className="w-full">
                   <div className="bg-surface w-full h-full flex items-center justify-center">16:9 box</div>
                 </AspectRatio>
               </Preview>
@@ -863,11 +889,11 @@ const [page, setPage] = useState(1);
 />`}</Code>
               <Label>Example (25 items, 10 per page)</Label>
               <Preview column>
-                <Pagination 
-                  total={25} 
-                  current={1} 
-                  pageSize={10} 
-                  onPageChange={() => {}} 
+                <Pagination
+                  total={25}
+                  current={1}
+                  pageSize={10}
+                  onPageChange={() => { }}
                   showTotal
                 />
               </Preview>
@@ -899,7 +925,7 @@ const steps = [
 <Stepper steps={steps} currentStep={current} onStepChange={setCurrent} />`}</Code>
               <Label>Horizontal</Label>
               <Preview>
-                <Stepper 
+                <Stepper
                   steps={[
                     { id: 1, label: 'Personal Info', completed: true },
                     { id: 2, label: 'Address', completed: true },
@@ -908,12 +934,12 @@ const steps = [
                   ]}
                   currentStep={2}
                   orientation="horizontal"
-                  onStepChange={() => {}}
+                  onStepChange={() => { }}
                 />
               </Preview>
               <Label>With descriptions and error</Label>
               <Preview column>
-                <Stepper 
+                <Stepper
                   steps={[
                     { id: 1, label: 'Step 1', description: 'Complete', completed: true },
                     { id: 2, label: 'Step 2', description: 'Current step' },
@@ -921,7 +947,7 @@ const steps = [
                   ]}
                   currentStep={1}
                   orientation="horizontal"
-                  onStepChange={() => {}}
+                  onStepChange={() => { }}
                 />
               </Preview>
               <PropsTable rows={[
@@ -1502,19 +1528,19 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
 />`}</Code>
               <Label>Vertical (default)</Label>
               <Preview column>
-                <RadioGroup 
+                <RadioGroup
                   options={[
                     { value: 'personal', label: 'Personal' },
                     { value: 'business', label: 'Business' },
                     { value: 'nonprofit', label: 'Non-profit' },
                   ]}
                   defaultValue="personal"
-                  onValueChange={() => {}}
+                  onValueChange={() => { }}
                 />
               </Preview>
               <Label>Horizontal</Label>
               <Preview>
-                <RadioGroup 
+                <RadioGroup
                   direction="horizontal"
                   options={[
                     { value: 'yes', label: 'Yes' },
@@ -1522,7 +1548,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                     { value: 'maybe', label: 'Maybe' },
                   ]}
                   defaultValue="yes"
-                  onChange={() => {}}
+                  onChange={() => { }}
                 />
               </Preview>
               <PropsTable rows={[
@@ -1637,7 +1663,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                   label="Upload files"
                   accept="*"
                   helperText="Drag and drop files here or click to browse"
-                  onFilesSelected={() => {}}
+                  onFilesSelected={() => { }}
                 />
               </Preview>
               <PropsTable rows={[
@@ -1662,7 +1688,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
   onComplete={(code) => console.log('Code:', code)}
 />`}</Code>
               <Preview column>
-                <OTPInput label="6-digit code" length={6} onComplete={() => {}} />
+                <OTPInput label="6-digit code" length={6} onComplete={() => { }} />
               </Preview>
               <PropsTable rows={[
                 { name: 'length', type: 'number', def: '6', desc: 'Number of input fields' },
@@ -1686,11 +1712,11 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
   onChange={(e) => setColor(e.target.value)}
 />`}</Code>
               <Preview column>
-                <ColorPicker 
-                  label="Select a color" 
+                <ColorPicker
+                  label="Select a color"
                   showInput
                   presets={['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444']}
-                  onChange={() => {}}
+                  onChange={() => { }}
                 />
               </Preview>
               <PropsTable rows={[
@@ -1729,7 +1755,7 @@ import { FiMail, FiLock } from 'flxtheme/icons/fi';
                     { value: 3, label: 'Cherry' },
                     { value: 4, label: 'Date' },
                   ]}
-                  onValueChange={() => {}}
+                  onValueChange={() => { }}
                 />
               </Preview>
               <PropsTable rows={[

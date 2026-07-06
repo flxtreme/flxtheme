@@ -16,15 +16,27 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
       min = 0,
       max = 100,
       step = 1,
-      value = 50,
+      value,
+      defaultValue = 50,
       marks,
       className = '',
       disabled,
+      onChange,
       ...props
     },
     ref
   ) => {
-    const percentage = ((Number(value) - Number(min)) / (Number(max) - Number(min))) * 100;
+    const [internalValue, setInternalValue] = React.useState(defaultValue);
+    const isControlled = value !== undefined;
+    const currentValue = isControlled ? value : internalValue;
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!isControlled) setInternalValue(Number(e.target.value));
+      onChange?.(e);
+    };
+
+    const percentage =
+      ((Number(currentValue) - Number(min)) / (Number(max) - Number(min))) * 100;
 
     return (
       <div className="flx-slider__wrapper">
@@ -33,7 +45,7 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             {label}
             {showValue && (
               <span className="flx-slider__value float-right font-semibold text-primary">
-                {value}
+                {currentValue}
               </span>
             )}
           </label>
@@ -46,7 +58,8 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             min={min}
             max={max}
             step={step}
-            value={value}
+            value={currentValue}
+            onChange={handleChange}
             disabled={disabled}
             className={cn(
               'flx-slider__input w-full h-2 bg-border rounded-full outline-none appearance-none cursor-pointer',

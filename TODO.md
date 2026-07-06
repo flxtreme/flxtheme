@@ -18,14 +18,14 @@
 
 ## Data & Display
 
-- [ ] **Avatar / AvatarGroup** — user image with fallback initials
-- [ ] **Tag / Chip** — removable label tokens
-- [ ] **DataGrid** — sortable, filterable table extension
-- [ ] **EmptyState** — zero-data placeholder with CTA
-- [ ] **Stat / KPICard** — metric display with trend arrow
-- [ ] **Timeline** — vertical event history list
-- [ ] **Accordion / Collapse** — expandable content panels
-- [ ] **List / ListItem** — structured vertical list
+- [x] **Avatar / AvatarGroup** — user image with fallback initials
+- [x] **Tag / Chip** — removable label tokens
+- [x] **DataGrid** — sortable, filterable table extension
+- [x] **EmptyState** — zero-data placeholder with CTA
+- [x] **Stat / KPICard** — metric display with trend arrow
+- [x] **Timeline** — vertical event history list
+- [x] **Accordion / Collapse** — expandable content panels
+- [x] **List / ListItem** — structured vertical list
 
 ## Form & Input
 
