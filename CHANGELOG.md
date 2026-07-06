@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/flxtreme/flxtheme/compare/v1.4.1...v1.5.0) (2026-07-06)
+
+
+### Features
+
+* add data-display components and fix Slider/Accordion bugs ([e3e7880](https://github.com/flxtreme/flxtheme/commit/e3e7880a82f699ea3f677e575d38c4cf2ffa13be))
+
 ## [1.4.1](https://github.com/flxtreme/flxtheme/compare/v1.4.0...v1.4.1) (2026-07-05)
 
 
