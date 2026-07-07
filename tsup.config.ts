@@ -14,7 +14,6 @@ export default defineConfig(async () => {
   return {
     entry: {
       index: 'src/index.ts',
-      'tailwind-preset': 'src/tailwind-preset.ts',
       ...iconEntries,
       utils: 'src/utils/index.ts',
     },

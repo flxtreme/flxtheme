@@ -54,6 +54,9 @@
     "theme",
     "tailwindcss"
   ],
+  "bin": {
+    "flxtheme": "./bin/init.js"
+  },
   "author": "",
   "license": "MIT",
   "peerDependencies": {
