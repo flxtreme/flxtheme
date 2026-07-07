@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.4](https://github.com/flxtreme/flxtheme/compare/v1.5.3...v1.5.4) (2026-07-07)
+
+
+### Bug Fixes
+
+* **theme:** fix theme script, added missing module ([3eb7d7c](https://github.com/flxtreme/flxtheme/commit/3eb7d7c340dd9d74e60d1de3013c30fb3d4c0be5))
+
 ## [1.5.3](https://github.com/flxtreme/flxtheme/compare/v1.5.2...v1.5.3) (2026-07-07)
 
 
