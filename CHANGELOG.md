@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.8](https://github.com/flxtreme/flxtheme/compare/v1.5.7...v1.5.8) (2026-07-07)
+
+
+### Bug Fixes
+
+* **docs:** updated readme ([2f6be40](https://github.com/flxtreme/flxtheme/commit/2f6be407757c6fcf2dda84b1a0286e8557cfe683))
+
 ## [1.5.7](https://github.com/flxtreme/flxtheme/compare/v1.5.6...v1.5.7) (2026-07-07)
 
 
