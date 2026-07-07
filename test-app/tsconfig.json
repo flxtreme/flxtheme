@@ -14,10 +14,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "paths": {
-      "flxtheme": ["../src/index.ts"],
-      "flxtheme/*": ["../src/*"]
-    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
