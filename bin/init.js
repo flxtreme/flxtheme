@@ -2,59 +2,55 @@
 
 const fs = require('fs');
 const path = require('path');
-const { select, input } = require('@inquirer/prompts');
+const { select } = require('@inquirer/prompts');
 
-function buildCss(prefix) {
-  const p = prefix ? `${prefix}-` : '';
+const CSS = `@theme {
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-secondary: #8b5cf6;
+  --color-secondary-hover: #7c3aed;
+  --color-tertiary: #ec4899;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-surface: #f8fafc;
+  --color-surface-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-accent: #f0abfc;
+  --color-accent-foreground: #701a75;
+  --color-destructive: #ef4444;
+  --color-destructive-hover: #dc2626;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
 
-  return `@theme {
-  --color-${p}primary: #6366f1;
-  --color-${p}primary-hover: #4f46e5;
-  --color-${p}secondary: #8b5cf6;
-  --color-${p}secondary-hover: #7c3aed;
-  --color-${p}tertiary: #ec4899;
-  --color-${p}background: #ffffff;
-  --color-${p}foreground: #0f172a;
-  --color-${p}surface: #f8fafc;
-  --color-${p}surface-hover: #f1f5f9;
-  --color-${p}border: #e2e8f0;
-  --color-${p}muted: #f1f5f9;
-  --color-${p}muted-foreground: #64748b;
-  --color-${p}accent: #f0abfc;
-  --color-${p}accent-foreground: #701a75;
-  --color-${p}destructive: #ef4444;
-  --color-${p}destructive-hover: #dc2626;
-  --color-${p}success: #22c55e;
-  --color-${p}warning: #f59e0b;
-  --color-${p}info: #3b82f6;
-
-  --radius-${p}: 0.5rem;
-  --font-${p}: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 0.5rem;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .dark {
-  --color-${p}primary: #818cf8;
-  --color-${p}primary-hover: #6366f1;
-  --color-${p}secondary: #a78bfa;
-  --color-${p}secondary-hover: #8b5cf6;
-  --color-${p}tertiary: #f472b6;
-  --color-${p}background: #0f172a;
-  --color-${p}foreground: #f8fafc;
-  --color-${p}surface: #1e293b;
-  --color-${p}surface-hover: #334155;
-  --color-${p}border: #334155;
-  --color-${p}muted: #1e293b;
-  --color-${p}muted-foreground: #94a3b8;
-  --color-${p}accent: #c084fc;
-  --color-${p}accent-foreground: #f5d0fe;
-  --color-${p}destructive: #f87171;
-  --color-${p}destructive-hover: #ef4444;
-  --color-${p}success: #4ade80;
-  --color-${p}warning: #fbbf24;
-  --color-${p}info: #60a5fa;
+  --color-primary: #818cf8;
+  --color-primary-hover: #6366f1;
+  --color-secondary: #a78bfa;
+  --color-secondary-hover: #8b5cf6;
+  --color-tertiary: #f472b6;
+  --color-background: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-surface: #1e293b;
+  --color-surface-hover: #334155;
+  --color-border: #334155;
+  --color-muted: #1e293b;
+  --color-muted-foreground: #94a3b8;
+  --color-accent: #c084fc;
+  --color-accent-foreground: #f5d0fe;
+  --color-destructive: #f87171;
+  --color-destructive-hover: #ef4444;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-info: #60a5fa;
 }
 `;
-}
 
 const cwd = process.cwd();
 
@@ -66,15 +62,9 @@ function ensureDir(file) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
 }
 
-function writeTheme(file, prefix) {
+function writeTheme(file) {
   ensureDir(file);
-
-  if (fs.existsSync(file)) {
-    console.log(`Skipped: ${path.relative(cwd, file)} already exists.`);
-    return false;
-  }
-
-  fs.writeFileSync(file, buildCss(prefix), 'utf8');
+  fs.writeFileSync(file, CSS, 'utf8');
   console.log(`Created ${path.relative(cwd, file)}`);
   return true;
 }
@@ -140,9 +130,9 @@ function findViteCss() {
   return null;
 }
 
-function cssOnly(prefix) {
+function cssOnly() {
   const target = path.join(cwd, 'src', 'flxtheme.css');
-  writeTheme(target, prefix);
+  writeTheme(target);
 }
 
 async function run() {
@@ -164,24 +154,19 @@ async function run() {
     ],
   });
 
-  const prefix = await input({
-    message: 'Variable prefix (leave empty for none)',
-    default: '',
-  });
-
   if (framework === 'next') {
     const cssFile = findNextCss();
 
     if (!cssFile) {
       console.log('No Next.js global CSS found.');
       console.log('Falling back to CSS Only.\n');
-      cssOnly(prefix);
+      cssOnly();
       return;
     }
 
     const themeFile = path.join(path.dirname(cssFile), 'flxtheme.css');
 
-    writeTheme(themeFile, prefix);
+    writeTheme(themeFile);
     injectImport(cssFile, themeFile);
     return;
   }
@@ -192,18 +177,18 @@ async function run() {
     if (!cssFile) {
       console.log('No Vite CSS file found.');
       console.log('Falling back to CSS Only.\n');
-      cssOnly(prefix);
+      cssOnly();
       return;
     }
 
     const themeFile = path.join(cwd, 'src', 'flxtheme.css');
 
-    writeTheme(themeFile, prefix);
+    writeTheme(themeFile);
     injectImport(cssFile, themeFile);
     return;
   }
 
-  cssOnly(prefix);
+  cssOnly();
 }
 
 const cmd = process.argv[2];
