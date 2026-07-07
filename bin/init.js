@@ -4,9 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { select, input } = require('@inquirer/prompts');
 
-const cwd = process.cwd();
-
-function createTheme(prefix) {
+function buildCss(prefix) {
   const p = prefix ? `${prefix}-` : '';
 
   return `@theme {
@@ -30,8 +28,8 @@ function createTheme(prefix) {
   --color-${p}warning: #f59e0b;
   --color-${p}info: #3b82f6;
 
-  --radius-${prefix || ''}: 0.5rem;
-  --font-${prefix || ''}: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius-${p}: 0.5rem;
+  --font-${p}: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .dark {
@@ -58,6 +56,8 @@ function createTheme(prefix) {
 `;
 }
 
+const cwd = process.cwd();
+
 function exists(file) {
   return fs.existsSync(path.join(cwd, file));
 }
@@ -74,7 +74,7 @@ function writeTheme(file, prefix) {
     return false;
   }
 
-  fs.writeFileSync(file, createTheme(prefix), 'utf8');
+  fs.writeFileSync(file, buildCss(prefix), 'utf8');
   console.log(`Created ${path.relative(cwd, file)}`);
   return true;
 }
@@ -91,7 +91,7 @@ function injectImport(cssFile, themeFile) {
     content = `@import "tailwindcss";\n${sourceImport}\n${themeImport}\n\n${content}`;
   } else {
     content = content.replace(tailwindRegex, (match) => {
-      const lines = [match];
+      let lines = [match];
 
       if (!content.includes(sourceImport)) {
         lines.push(sourceImport);
@@ -143,4 +143,76 @@ function findViteCss() {
 function cssOnly(prefix) {
   const target = path.join(cwd, 'src', 'flxtheme.css');
   writeTheme(target, prefix);
+}
+
+async function run() {
+  const framework = await select({
+    message: 'Select your project',
+    choices: [
+      {
+        name: 'Next.js',
+        value: 'next',
+      },
+      {
+        name: 'Vite',
+        value: 'vite',
+      },
+      {
+        name: 'CSS Only',
+        value: 'css',
+      },
+    ],
+  });
+
+  const prefix = await input({
+    message: 'Variable prefix (leave empty for none)',
+    default: '',
+  });
+
+  if (framework === 'next') {
+    const cssFile = findNextCss();
+
+    if (!cssFile) {
+      console.log('No Next.js global CSS found.');
+      console.log('Falling back to CSS Only.\n');
+      cssOnly(prefix);
+      return;
+    }
+
+    const themeFile = path.join(path.dirname(cssFile), 'flxtheme.css');
+
+    writeTheme(themeFile, prefix);
+    injectImport(cssFile, themeFile);
+    return;
+  }
+
+  if (framework === 'vite') {
+    const cssFile = findViteCss();
+
+    if (!cssFile) {
+      console.log('No Vite CSS file found.');
+      console.log('Falling back to CSS Only.\n');
+      cssOnly(prefix);
+      return;
+    }
+
+    const themeFile = path.join(cwd, 'src', 'flxtheme.css');
+
+    writeTheme(themeFile, prefix);
+    injectImport(cssFile, themeFile);
+    return;
+  }
+
+  cssOnly(prefix);
+}
+
+const cmd = process.argv[2];
+
+if (cmd === 'init') {
+  run().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+} else {
+  console.log('Usage: npx flxtheme@latest init');
 }
