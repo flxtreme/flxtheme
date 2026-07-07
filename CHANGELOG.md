@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.3](https://github.com/flxtreme/flxtheme/compare/v1.5.2...v1.5.3) (2026-07-07)
+
+
+### Bug Fixes
+
+* **theme:** select tech on theme init script ([376d36b](https://github.com/flxtreme/flxtheme/commit/376d36bab4e6efdda4feefc519380e6269fbca5b))
+
 ## [1.5.2](https://github.com/flxtreme/flxtheme/compare/v1.5.1...v1.5.2) (2026-07-07)
 
 
