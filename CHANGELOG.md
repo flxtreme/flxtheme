@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.6](https://github.com/flxtreme/flxtheme/compare/v1.5.5...v1.5.6) (2026-07-07)
+
+
+### Bug Fixes
+
+* **theme:** fix theme script, add prefix fix ([34b16ac](https://github.com/flxtreme/flxtheme/commit/34b16ac0634657b82c81da3d6a8e1af98109c603))
+
 ## [1.5.5](https://github.com/flxtreme/flxtheme/compare/v1.5.4...v1.5.5) (2026-07-07)
 
 
