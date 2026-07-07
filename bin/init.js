@@ -2,59 +2,61 @@
 
 const fs = require('fs');
 const path = require('path');
-const { select } = require('@inquirer/prompts');
+const { select, input } = require('@inquirer/prompts');
 
-const CSS = `@import "tailwindcss";
+const cwd = process.cwd();
 
-@theme {
-  --color-flx-primary: #6366f1;
-  --color-flx-primary-hover: #4f46e5;
-  --color-flx-secondary: #8b5cf6;
-  --color-flx-secondary-hover: #7c3aed;
-  --color-flx-tertiary: #ec4899;
-  --color-flx-background: #ffffff;
-  --color-flx-foreground: #0f172a;
-  --color-flx-surface: #f8fafc;
-  --color-flx-surface-hover: #f1f5f9;
-  --color-flx-border: #e2e8f0;
-  --color-flx-muted: #f1f5f9;
-  --color-flx-muted-foreground: #64748b;
-  --color-flx-accent: #f0abfc;
-  --color-flx-accent-foreground: #701a75;
-  --color-flx-destructive: #ef4444;
-  --color-flx-destructive-hover: #dc2626;
-  --color-flx-success: #22c55e;
-  --color-flx-warning: #f59e0b;
-  --color-flx-info: #3b82f6;
+function createTheme(prefix) {
+  const p = prefix ? `${prefix}-` : '';
 
-  --radius-flx: 0.5rem;
-  --font-flx: 'Inter', system-ui, -apple-system, sans-serif;
+  return `@theme {
+  --color-${p}primary: #6366f1;
+  --color-${p}primary-hover: #4f46e5;
+  --color-${p}secondary: #8b5cf6;
+  --color-${p}secondary-hover: #7c3aed;
+  --color-${p}tertiary: #ec4899;
+  --color-${p}background: #ffffff;
+  --color-${p}foreground: #0f172a;
+  --color-${p}surface: #f8fafc;
+  --color-${p}surface-hover: #f1f5f9;
+  --color-${p}border: #e2e8f0;
+  --color-${p}muted: #f1f5f9;
+  --color-${p}muted-foreground: #64748b;
+  --color-${p}accent: #f0abfc;
+  --color-${p}accent-foreground: #701a75;
+  --color-${p}destructive: #ef4444;
+  --color-${p}destructive-hover: #dc2626;
+  --color-${p}success: #22c55e;
+  --color-${p}warning: #f59e0b;
+  --color-${p}info: #3b82f6;
+
+  --radius-${prefix || ''}: 0.5rem;
+  --font-${prefix || ''}: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .dark {
-  --color-flx-primary: #818cf8;
-  --color-flx-primary-hover: #6366f1;
-  --color-flx-secondary: #a78bfa;
-  --color-flx-secondary-hover: #8b5cf6;
-  --color-flx-tertiary: #f472b6;
-  --color-flx-background: #0f172a;
-  --color-flx-foreground: #f8fafc;
-  --color-flx-surface: #1e293b;
-  --color-flx-surface-hover: #334155;
-  --color-flx-border: #334155;
-  --color-flx-muted: #1e293b;
-  --color-flx-muted-foreground: #94a3b8;
-  --color-flx-accent: #c084fc;
-  --color-flx-accent-foreground: #f5d0fe;
-  --color-flx-destructive: #f87171;
-  --color-flx-destructive-hover: #ef4444;
-  --color-flx-success: #4ade80;
-  --color-flx-warning: #fbbf24;
-  --color-flx-info: #60a5fa;
+  --color-${p}primary: #818cf8;
+  --color-${p}primary-hover: #6366f1;
+  --color-${p}secondary: #a78bfa;
+  --color-${p}secondary-hover: #8b5cf6;
+  --color-${p}tertiary: #f472b6;
+  --color-${p}background: #0f172a;
+  --color-${p}foreground: #f8fafc;
+  --color-${p}surface: #1e293b;
+  --color-${p}surface-hover: #334155;
+  --color-${p}border: #334155;
+  --color-${p}muted: #1e293b;
+  --color-${p}muted-foreground: #94a3b8;
+  --color-${p}accent: #c084fc;
+  --color-${p}accent-foreground: #f5d0fe;
+  --color-${p}destructive: #f87171;
+  --color-${p}destructive-hover: #ef4444;
+  --color-${p}success: #4ade80;
+  --color-${p}warning: #fbbf24;
+  --color-${p}info: #60a5fa;
 }
 `;
-
-const cwd = process.cwd();
+}
 
 function exists(file) {
   return fs.existsSync(path.join(cwd, file));
@@ -64,7 +66,7 @@ function ensureDir(file) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
 }
 
-function writeTheme(file) {
+function writeTheme(file, prefix) {
   ensureDir(file);
 
   if (fs.existsSync(file)) {
@@ -72,28 +74,38 @@ function writeTheme(file) {
     return false;
   }
 
-  fs.writeFileSync(file, CSS, 'utf8');
+  fs.writeFileSync(file, createTheme(prefix), 'utf8');
   console.log(`Created ${path.relative(cwd, file)}`);
   return true;
 }
 
 function injectImport(cssFile, themeFile) {
-  const importPath =
-    './' + path.basename(themeFile);
-
-  const importLine = `@import "${importPath}";`;
+  const themeImport = `@import "./${path.basename(themeFile)}";`;
+  const sourceImport = `@source "../node_modules/flxtheme";`;
 
   let content = fs.readFileSync(cssFile, 'utf8');
 
-  if (content.includes(importLine)) {
-    console.log(`Import already exists in ${path.relative(cwd, cssFile)}`);
-    return;
+  const tailwindRegex = /@import\s+["']tailwindcss["'];?/;
+
+  if (!tailwindRegex.test(content)) {
+    content = `@import "tailwindcss";\n${sourceImport}\n${themeImport}\n\n${content}`;
+  } else {
+    content = content.replace(tailwindRegex, (match) => {
+      const lines = [match];
+
+      if (!content.includes(sourceImport)) {
+        lines.push(sourceImport);
+      }
+
+      if (!content.includes(themeImport)) {
+        lines.push(themeImport);
+      }
+
+      return lines.join('\n');
+    });
   }
 
-  content = `${importLine}\n\n${content}`;
-
   fs.writeFileSync(cssFile, content, 'utf8');
-
   console.log(`Updated ${path.relative(cwd, cssFile)}`);
 }
 
@@ -128,77 +140,7 @@ function findViteCss() {
   return null;
 }
 
-function cssOnly() {
+function cssOnly(prefix) {
   const target = path.join(cwd, 'src', 'flxtheme.css');
-  writeTheme(target);
-}
-
-async function run() {
-  const framework = await select({
-    message: 'Select your project',
-    choices: [
-      {
-        name: 'Next.js',
-        value: 'next',
-      },
-      {
-        name: 'Vite',
-        value: 'vite',
-      },
-      {
-        name: 'CSS Only',
-        value: 'css',
-      },
-    ],
-  });
-
-  if (framework === 'next') {
-    const cssFile = findNextCss();
-
-    if (!cssFile) {
-      console.log('No Next.js global CSS found.');
-      console.log('Falling back to CSS Only.\n');
-      cssOnly();
-      return;
-    }
-
-    const themeFile = path.join(
-      path.dirname(cssFile),
-      'flxtheme.css'
-    );
-
-    writeTheme(themeFile);
-    injectImport(cssFile, themeFile);
-    return;
-  }
-
-  if (framework === 'vite') {
-    const cssFile = findViteCss();
-
-    if (!cssFile) {
-      console.log('No Vite CSS file found.');
-      console.log('Falling back to CSS Only.\n');
-      cssOnly();
-      return;
-    }
-
-    const themeFile = path.join(cwd, 'src', 'flxtheme.css');
-
-    writeTheme(themeFile);
-    injectImport(cssFile, themeFile);
-    return;
-  }
-
-  cssOnly();
-}
-
-const cmd = process.argv[2];
-
-if (cmd === 'init') {
-  run().catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
-} else {
-  console.log('Usage: npx flxtheme@latest init');
+  writeTheme(target, prefix);
 }

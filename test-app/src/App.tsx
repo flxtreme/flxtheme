@@ -1974,7 +1974,7 @@ function DocsApp() {
 
 export default function App() {
   return (
-    <FlxTheme>
+    <FlxTheme defaultMode='dark'>
       <ModalProvider>
         <ToastProvider defaultDuration={2500}>
           <DocsApp />
