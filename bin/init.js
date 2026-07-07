@@ -1,8 +1,8 @@
 #!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
-
-const TARGET = path.resolve(process.cwd(), 'flxtheme.css');
+const { select } = require('@inquirer/prompts');
 
 const CSS = `@import "tailwindcss";
 
@@ -54,19 +54,151 @@ const CSS = `@import "tailwindcss";
 }
 `;
 
-function run() {
-  if (fs.existsSync(TARGET)) {
-    console.log('flxtheme.css already exists — skipping (delete it first to regenerate).');
+const cwd = process.cwd();
+
+function exists(file) {
+  return fs.existsSync(path.join(cwd, file));
+}
+
+function ensureDir(file) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+}
+
+function writeTheme(file) {
+  ensureDir(file);
+
+  if (fs.existsSync(file)) {
+    console.log(`Skipped: ${path.relative(cwd, file)} already exists.`);
+    return false;
+  }
+
+  fs.writeFileSync(file, CSS, 'utf8');
+  console.log(`Created ${path.relative(cwd, file)}`);
+  return true;
+}
+
+function injectImport(cssFile, themeFile) {
+  const importPath =
+    './' + path.basename(themeFile);
+
+  const importLine = `@import "${importPath}";`;
+
+  let content = fs.readFileSync(cssFile, 'utf8');
+
+  if (content.includes(importLine)) {
+    console.log(`Import already exists in ${path.relative(cwd, cssFile)}`);
     return;
   }
-  fs.writeFileSync(TARGET, CSS, 'utf8');
-  console.log('Created flxtheme.css');
-  console.log('Import it once in your app entry CSS: @import "./flxtheme.css";');
+
+  content = `${importLine}\n\n${content}`;
+
+  fs.writeFileSync(cssFile, content, 'utf8');
+
+  console.log(`Updated ${path.relative(cwd, cssFile)}`);
+}
+
+function findNextCss() {
+  const candidates = [
+    'app/globals.css',
+    'src/app/globals.css',
+    'styles/globals.css',
+  ];
+
+  for (const file of candidates) {
+    if (exists(file)) {
+      return path.join(cwd, file);
+    }
+  }
+
+  return null;
+}
+
+function findViteCss() {
+  const candidates = [
+    'src/index.css',
+    'src/main.css',
+  ];
+
+  for (const file of candidates) {
+    if (exists(file)) {
+      return path.join(cwd, file);
+    }
+  }
+
+  return null;
+}
+
+function cssOnly() {
+  const target = path.join(cwd, 'src', 'flxtheme.css');
+  writeTheme(target);
+}
+
+async function run() {
+  const framework = await select({
+    message: 'Select your project',
+    choices: [
+      {
+        name: 'Next.js',
+        value: 'next',
+      },
+      {
+        name: 'Vite',
+        value: 'vite',
+      },
+      {
+        name: 'CSS Only',
+        value: 'css',
+      },
+    ],
+  });
+
+  if (framework === 'next') {
+    const cssFile = findNextCss();
+
+    if (!cssFile) {
+      console.log('No Next.js global CSS found.');
+      console.log('Falling back to CSS Only.\n');
+      cssOnly();
+      return;
+    }
+
+    const themeFile = path.join(
+      path.dirname(cssFile),
+      'flxtheme.css'
+    );
+
+    writeTheme(themeFile);
+    injectImport(cssFile, themeFile);
+    return;
+  }
+
+  if (framework === 'vite') {
+    const cssFile = findViteCss();
+
+    if (!cssFile) {
+      console.log('No Vite CSS file found.');
+      console.log('Falling back to CSS Only.\n');
+      cssOnly();
+      return;
+    }
+
+    const themeFile = path.join(cwd, 'src', 'flxtheme.css');
+
+    writeTheme(themeFile);
+    injectImport(cssFile, themeFile);
+    return;
+  }
+
+  cssOnly();
 }
 
 const cmd = process.argv[2];
+
 if (cmd === 'init') {
-  run();
+  run().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 } else {
-  console.log('Usage: npx flxtheme init');
+  console.log('Usage: npx flxtheme@latest init');
 }
